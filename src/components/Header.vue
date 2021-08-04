@@ -1,6 +1,7 @@
 <template>
-  <header>
-    <h1>NETFLIX</h1>
+  <header :class="{'second-back-ground': topDistance}">
+    
+    <img src="https://image.tmdb.org/t/p/w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png" height="32" alt="">
 
     <nav class="primary-nav">
       <ul class="primary-nav-list">
@@ -15,19 +16,52 @@
 </template>
 
 <script lang="ts">
-export default {};
+import { Options, Vue } from "vue-class-component";
+
+Options({
+  data() {
+    return {
+      topDistance: 0
+    }
+  }
+})
+
+export default class Header extends Vue {
+private topDistance = 0
+
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll(event: any) {
+    this.topDistance = window.pageYOffset;
+  }
+
+};
+
 </script>
 
 <style lang="scss" scoped>
+.second-back-ground {
+  transition: background-color .5s;
+  background-color: rgb(20, 20, 20);
+}
+
+// .first-back-ground {
+//   transition: background-color .5s;
+//   background: linear-gradient(rgb(20, 20, 20) 1%, transparent 99%);
+// }
+
 header {
   width: 100%;
   height: 75px;
-  background: transparent;
   display: flex;
   align-items: center;
   padding-left: 62px;
   position: fixed;
   z-index: 999;
+  transition: background-color .5s;
+  background: linear-gradient(rgb(20, 20, 20) 1%, transparent 99%);
 
   h1 {
     font-size: 32px;
