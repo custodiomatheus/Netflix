@@ -4,21 +4,29 @@
 
 <style lang="scss">
 * {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
-html {
+body {
   background-color: var(--black);
+  color: var(--white);
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
   --black: #141414;
   --white: #fff;
-  --red: #E50914;
-  --gray: #A7A7A7;
-  --gray-secondary: #6D6D6D;
+  --red: #e50914;
+  --gray: #a7a7a7;
+  --gray-secondary: #333;
+  --green: #46d369;
 }
 </style>
