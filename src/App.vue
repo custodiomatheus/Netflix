@@ -29,4 +29,9 @@ ul {
   --gray-secondary: #333;
   --green: #46d369;
 }
+
+.fab {
+  font-size: 30px;
+  cursor: pointer;
+}
 </style>
