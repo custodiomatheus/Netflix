@@ -13,16 +13,22 @@
         </li>
       </ul>
     </section>
+
+    <Footer />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+
 import Header from "../components/Header.vue";
 import FeatureMovie from "../components/FeatureMovie.vue";
 import Row from "../components/Row.vue";
-import seriesList from "../service/Tmdb";
+import Footer from "../components/Footer.vue";
+
 import SeriesType from "../types/SeriesType";
+
+import seriesList from "../service/Tmdb";
 
 @Options({
   data() {
@@ -36,6 +42,7 @@ import SeriesType from "../types/SeriesType";
     Header,
     FeatureMovie,
     Row,
+    Footer,
   },
 })
 export default class Home extends Vue {
