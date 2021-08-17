@@ -1,9 +1,12 @@
 <template>
-  <header :class="{'second-back-ground': topDistance}">
-    
-    <img src="https://image.tmdb.org/t/p/w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png" height="32" alt="">
+  <header :class="[topDistance ? 'background-solid' : $route.path === '/home' ? 'background-gradient' : none]">
+    <img
+      src="https://image.tmdb.org/t/p/w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
+      :height="$route.path === '/login' ? 50 : 32"
+      alt=""
+    />
 
-    <nav class="primary-nav">
+    <nav class="primary-nav" v-if="$route.path === '/home'">
       <ul class="primary-nav-list">
         <li class="primary-nav-list__item active">Início</li>
         <li>Séries</li>
@@ -21,13 +24,13 @@ import { Options, Vue } from "vue-class-component";
 Options({
   data() {
     return {
-      topDistance: 0
-    }
-  }
-})
+      topDistance: 0,
+    };
+  },
+});
 
 export default class Header extends Vue {
-private topDistance = 0
+  private topDistance = 0;
 
   created() {
     window.addEventListener("scroll", this.handleScroll);
@@ -36,32 +39,27 @@ private topDistance = 0
   handleScroll(event: any) {
     this.topDistance = window.pageYOffset;
   }
-
-};
-
+}
 </script>
 
 <style lang="scss" scoped>
-.second-back-ground {
-  transition: background-color .5s;
+.background-gradient {
+  background: linear-gradient(rgb(20, 20, 20) 1%, transparent 99%);
+}
+.background-solid {
+  transition: background-color 0.5s;
   background-color: rgb(20, 20, 20);
 }
 
-// .first-back-ground {
-//   transition: background-color .5s;
-//   background: linear-gradient(rgb(20, 20, 20) 1%, transparent 99%);
-// }
-
 header {
   width: 100%;
-  height: 75px;
   display: flex;
   align-items: center;
-  padding-left: 62px;
+  padding: 3.5vh 62px;
   position: fixed;
+  top: 0;
   z-index: 999;
-  transition: background-color .5s;
-  background: linear-gradient(rgb(20, 20, 20) 1%, transparent 99%);
+  transition: background-color 0.5s;
 
   h1 {
     font-size: 32px;
