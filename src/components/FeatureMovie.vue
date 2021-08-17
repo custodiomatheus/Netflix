@@ -35,8 +35,8 @@
 
       <div class="feature--genres">
         <strong>Gêneros: </strong>
-        <span v-for="serie in serie.genres" :key="serie.id">
-          {{ serie.name }}
+        <span v-for="(genre, index) in serie.genres" :key="genre.id">
+          {{ genre.name }} {{ index == serie.genres?.length - 1 ? "" : ", " }}
         </span>
       </div>
     </div>
@@ -67,7 +67,7 @@ export default class FeatureMovie extends Vue {
   mounted(): void {
     api
       .get(
-        `https://api.themoviedb.org/3/tv/${this.serieId}?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=en-US`
+        `https://api.themoviedb.org/3/tv/${this.serieId}?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
       )
       .then((response) => {
         this.serie = response.data;
@@ -171,6 +171,10 @@ export default class FeatureMovie extends Vue {
     margin-top: 15px;
     font-size: 18px;
     color: var(--gray);
+    
+    span {
+
+    }
   }
 }
 
