@@ -50,7 +50,7 @@ import { Vue, Options } from "vue-class-component";
 
   data() {
     return {
-      marginScroll: 0,
+      marginScroll: 0 as number,
     };
   },
 })
@@ -59,7 +59,7 @@ export default class Row extends Vue {
   series!: [];
   marginScroll!: number;
 
-  scrollLeft() {
+  scrollLeft(): void {
     let amountSroll = this.marginScroll + Math.round(window.innerWidth / 2);
 
     if (amountSroll > 0) {
@@ -69,7 +69,7 @@ export default class Row extends Vue {
     this.marginScroll = amountSroll;
   }
 
-  scrollRight() {
+  scrollRight(): void {
     let amountSroll = this.marginScroll - Math.round(window.innerWidth / 2);
     const listSeriesSize = this.series.length * 150;
 

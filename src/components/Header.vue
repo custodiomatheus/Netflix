@@ -1,5 +1,13 @@
 <template>
-  <header :class="[topDistance ? 'background-solid' : $route.path === '/home' ? 'background-gradient' : 'none']">
+  <header
+    :class="[
+      topDistance
+        ? 'background-solid'
+        : $route.path === '/home'
+        ? 'background-gradient'
+        : 'none',
+    ]"
+  >
     <img
       src="https://image.tmdb.org/t/p/w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
       :height="$route.path === '/login' ? 50 : 32"
@@ -30,13 +38,13 @@ Options({
 });
 
 export default class Header extends Vue {
-  private topDistance = 0;
+  topDistance = 0;
 
-  created() {
+  created(): void {
     window.addEventListener("scroll", this.handleScroll);
   }
 
-  handleScroll(event: any) {
+  handleScroll(): void {
     this.topDistance = window.pageYOffset;
   }
 }
@@ -58,7 +66,7 @@ header {
   padding: 3.5vh 62px;
   position: fixed;
   top: 0;
-  z-index: 999;
+  z-index: 2;
   transition: background-color 0.5s;
 
   h1 {

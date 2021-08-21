@@ -1,6 +1,6 @@
-interface account {
+interface Account {
   id: number | undefined;
-  token: string | undefined ;
+  token: string | undefined;
 }
 
 export default {
@@ -8,22 +8,22 @@ export default {
   state: {
     token: undefined as string | undefined,
     id: undefined as number | undefined,
-  } as account,
+  } as Account,
   getters: {
-    getToken(state: account): string | undefined {
+    getToken(state: Account): string | undefined {
       return state.token;
     },
 
-    getId(state: account): number | undefined {
+    getId(state: Account): number | undefined {
       return state.id;
     },
   },
   mutations: {
-    setToken(state: account, newState: string): void {
+    setToken(state: Account, newState: string): void {
       state.token = newState;
     },
 
-    setId(state: account, newState: number): void {
+    setId(state: Account, newState: number): void {
       state.id = newState;
     },
   },

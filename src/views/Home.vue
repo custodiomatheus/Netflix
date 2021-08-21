@@ -33,11 +33,10 @@ import seriesList from "../service/Tmdb";
 @Options({
   data() {
     return {
-      homeSeries: [],
-      featureId: 0,
+      homeSeries: [] as SeriesType[],
+      featureId: 0 as number,
     };
   },
-
   components: {
     Header,
     FeatureMovie,
@@ -49,7 +48,7 @@ export default class Home extends Vue {
   homeSeries!: SeriesType[];
   featureId!: 0;
 
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.findSeries();
     this.sortFeatureSerie();
   }
