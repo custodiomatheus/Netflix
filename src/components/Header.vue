@@ -1,5 +1,5 @@
 <template>
-  <header :class="[topDistance ? 'background-solid' : $route.path === '/home' ? 'background-gradient' : none]">
+  <header :class="[topDistance ? 'background-solid' : $route.path === '/home' ? 'background-gradient' : 'none']">
     <img
       src="https://image.tmdb.org/t/p/w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
       :height="$route.path === '/login' ? 50 : 32"
