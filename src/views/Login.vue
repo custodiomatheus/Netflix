@@ -3,7 +3,9 @@
     <Header />
 
     <section class="login">
-      <h1 class="login--title">Entrar</h1>
+      <h1 class="login--title">
+        {{ isRegister ? "Crie sua assinatura" : "Entrar" }}
+      </h1>
 
       <form class="login--form">
         <input
@@ -19,9 +21,17 @@
           placeholder="Senha"
         />
 
-        <button class="login--button" @click="login">Entrar</button>
+        <select v-if="isRegister" v-model="flat" class="login--flat">
+          <option :value="flat" v-for="flat in flats" :key="flat.id">
+            {{ flat.name }}
+          </option>
+        </select>
 
-        <div class="login--actions">
+        <button class="login--button" @click.prevent="loginOrRegister">
+          {{ isRegister ? "Cadastre-se" : "Entrar" }}
+        </button>
+
+        <div v-if="!isRegister" class="login--actions">
           <div>
             <input type="checkbox" id="check-remember" />
             <label class="login--remember" for="check-remember"
@@ -40,13 +50,22 @@
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapGetters } from "vuex";
 import Header from "../components/Header.vue";
-import api from "../service/api";
+import axios from "axios";
+
+interface Flat {
+  id: number;
+  name: string;
+  price: number;
+}
 
 @Options({
   data() {
     return {
-      email: "",
-      password: "",
+      email: "" as string,
+      password: "" as string,
+      flat: {} as Flat,
+      isRegister: false as boolean,
+      flats: [] as Flat[],
     };
   },
   computed: {
@@ -62,21 +81,52 @@ import api from "../service/api";
 export default class Login extends Vue {
   email!: string;
   password!: string;
+  flat!: Flat;
+  isRegister!: boolean;
+  flats!: Flat[];
   getToken!: string | undefined;
   ActionSetToken!: (token: string) => void;
   ActionSetId!: (id: number) => void;
 
-  login(e: any) {
-    e.preventDefault();
+  mounted(): void {
+    this.isRegister = this.$route.path.includes("cadastro");
 
-    api
-      .post("/account/login", {
+    this.findFlats();
+  }
+
+  findFlats(): void {
+    axios
+      .get(`http://${process.env.VUE_APP_ROOT_BASE_URL}/flat`)
+      .then((response) => (this.flats = [...response.data]))
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  loginOrRegister() {
+    this.isRegister ? this.register() : this.login();
+  }
+
+  register() {
+    axios
+      .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/account`, {
+        email: this.email,
+        password: this.password,
+        flat: this.flat,
+      })
+      .then(() => this.$router.push("/login"))
+      .catch((error) => console.log(error));
+  }
+
+  login(): void {
+    axios
+      .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/account/login`, {
         email: this.email,
         password: this.password,
       })
       .then((response) => {
         const { id, token } = response.data;
-        
+
         this.ActionSetToken(token);
         this.ActionSetId(id);
         this.$router.push("/profiles");
@@ -112,7 +162,8 @@ export default class Login extends Vue {
   }
 
   &--email,
-  &--password {
+  &--password,
+  &--flat {
     width: inherit;
     height: 45px;
     padding-left: 15px;
@@ -121,6 +172,7 @@ export default class Login extends Vue {
     background-color: var(--gray-secondary);
     color: var(--white);
     font-size: 14px;
+    margin-bottom: 20px;
   }
 
   ::placeholder {
@@ -141,14 +193,6 @@ export default class Login extends Vue {
     font-size: 14px;
   }
 
-  &--email {
-    margin-bottom: 20px;
-  }
-
-  &--password {
-    margin-bottom: 40px;
-  }
-
   &--button,
   &--remember,
   &--register {
@@ -163,7 +207,7 @@ export default class Login extends Vue {
     background-color: var(--red);
     font-size: 18px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin: 20px 0;
   }
 
   &--actions {
