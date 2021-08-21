@@ -1,18 +1,37 @@
 <template>
   <div class="container">
+    <UserForm
+      v-if="isUserFormOpen"
+      @closeUserForm="closeUserForm"
+      :isAddUser="true"
+    />
     <Header />
 
     <section class="profile">
       <h1 class="profile--title">Quem está assistindo?</h1>
 
-      <div class="profile--users" v-for="user in users" :key="user.id">
-        <UserCard :user="user" :isEdit="isEdit" />
+      <div class="profile--users">
+        <UserCard
+          v-for="user in users"
+          :key="user.id"
+          :user="user"
+          :isManage="isManage"
+        />
 
-        <i v-if="users.length < 5" class="material-icons profile--add"> add_circle_outline </i>
+        <i
+          v-if="users.length < 5"
+          @click="startAddUser"
+          class="material-icons profile--add"
+        >
+          add_circle_outline
+        </i>
       </div>
 
-      <span @click="verifyStartOrFinishEdit" class="profile--manage-start">
-        {{ isEdit ? "OK" : "Gerenciar Perfis" }}
+      <span
+        @click="verifyStartOrFinishEdit"
+        :class="`profile--manage${isManage ? '-finish' : '-start'}`"
+      >
+        {{ isManage ? "OK" : "Gerenciar Perfis" }}
       </span>
     </section>
   </div>
@@ -20,10 +39,11 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 import Header from "../components/Header.vue";
 import UserCard from "../components/UserCard.vue";
+import UserForm from "../components/UserForm.vue";
 
 import api from "../service/api";
 import { User } from "../types/UserType";
@@ -32,56 +52,64 @@ import { User } from "../types/UserType";
   data() {
     return {
       users: [] as User[],
-      isEdit: false as boolean,
+      isManage: false as boolean,
+      isUserFormOpen: false as boolean,
     };
   },
   components: {
     Header,
     UserCard,
+    UserForm,
   },
   computed: {
     ...mapGetters("account", ["getToken", "getId"]),
+    ...mapGetters("user", ["getUserId", "getNickname"]),
+  },
+  methods: {
+    ...mapActions("user", ["ActionSetId", "ActionSetUserNickname"]),
   },
 })
 export default class Profile extends Vue {
   getToken!: string | undefined;
   getId!: string | undefined;
   users!: User[];
-  isEdit!: boolean;
+  isManage!: boolean;
+  isUserFormOpen!: boolean;
 
-  mounted() {
+  mounted(): void {
     this.findAccountProfiles();
   }
 
-  findAccountProfiles() {
+  findAccountProfiles(): void {
     api
       .get(`/account/users/${this.getId}`)
       .then((response) => {
-        this.users.push(...response.data.users);
+        this.users = [...response.data.users];
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  addUser() {
-    /**
-     * TODO -> Abrir o modal
-     *         Escolher nickname
-     *         Ao salvar mandar pra API
-     */
+  startAddUser(): void {
+    this.isUserFormOpen = true;
   }
 
-  verifyStartOrFinishEdit() {
-    !this.isEdit ? this.startEditNickname() : this.finishEditNickname();
+  verifyStartOrFinishEdit(): void {
+    !this.isManage ? this.startEditNickname() : this.finishEditNickname();
   }
 
-  startEditNickname() {
-    this.isEdit = true;
+  startEditNickname(): void {
+    this.isManage = true;
   }
 
-  finishEditNickname() {
-    this.isEdit = false;
+  finishEditNickname(): void {
+    this.isManage = false;
+  }
+
+  closeUserForm(): void {
+    this.isUserFormOpen = false;
+    this.findAccountProfiles();
   }
 }
 </script>
