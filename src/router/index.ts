@@ -16,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/Login.vue"),
   },
   {
+    path: "/cadastro",
+    name: "Cadastro",
+    component: () => import("../views/Login.vue"),
+  },
+  {
     path: "/profiles",
     name: "Profiles",
     component: () => import("../views/Profiles.vue"),
