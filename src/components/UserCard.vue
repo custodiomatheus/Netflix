@@ -1,7 +1,8 @@
 <template>
-  <div :class="['user', { 'is-edit': isEdit }]" @click="selectedUser">
+  <UserForm v-if="isUserFormOpen" :user="user" :title="false" @closeUserForm="closeUserForm" />
+  <div :class="['user', { 'is-edit': isManage }]" @click="selectedUser">
     <div :class="['user--card']">
-      <i v-if="isEdit" class="material-icons user--edit"> edit </i>
+      <i v-if="isManage" class="material-icons user--edit"> edit </i>
     </div>
     <p :class="['user--nickname']">{{ user.nickname }}</p>
   </div>
@@ -9,13 +10,16 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import { mapActions } from "vuex";
+
+import UserForm from "./UserForm.vue";
 
 import { User } from "../types/UserType";
 
 @Options({
   data() {
     return {
-      nickname: "" as string,
+      isUserFormOpen: false as boolean,
     };
   },
   props: {
@@ -23,42 +27,41 @@ import { User } from "../types/UserType";
       type: Object,
       require: true,
     },
-    isEdit: {
+    isManage: {
       type: Boolean,
       require: true,
     },
   },
+  methods: {
+    ...mapActions("user", ["ActionSetUserId", "ActionSetUserNickname"]),
+  },
+  components: {
+    UserForm,
+  },
 })
 export default class UserCard extends Vue {
-  isEdit!: boolean;
+  isManage!: boolean;
   user!: User;
-  nickname!: string;
+  isUserFormOpen!: boolean;
+  ActionSetUserId!: (id: number) => void;
+  ActionSetUserNickname!: (nickname: string) => void;
 
-  mounted() {
-    this.nickname = this.user.nickname;
+  selectedUser(): void {
+    this.isManage ? this.startEditUser() : this.redirectUserHome();
   }
 
-  selectedUser() {
-    this.isEdit ? this.editNickname() : this.redirectUserHome();
+  startEditUser(): void {
+    this.isUserFormOpen = true;
   }
 
-  editNickname() {
-    console.log(this.nickname);
-
-    /**
-     * TODO -> Abrir modal
-     *         Editar o nickaname
-     *         Ao salvar enviar para a API
-     */
-  }
-
-  redirectUserHome() {
+  redirectUserHome(): void {
     this.$router.push("/home");
+    this.ActionSetUserId(this.user.id);
+    this.ActionSetUserNickname(this.user.nickname);
+  }
 
-    /**
-     * TODO -> Adicionar o usuário selecionado na store
-     *         para isso precisa criar a store de user
-     */
+  closeUserForm(): void {
+    this.isUserFormOpen = false;
   }
 }
 </script>
@@ -72,7 +75,7 @@ export default class UserCard extends Vue {
   position: relative;
 
   &:hover &--card {
-    border: 3px solid var(--white);
+    border-color: var(--white);
   }
 
   &:hover &--edit-nickname,
@@ -84,12 +87,13 @@ export default class UserCard extends Vue {
     width: 100%;
     height: 170px;
     border-radius: 5px;
-    background-image: url("https://super.abril.com.br/wp-content/uploads/2016/07/1-ragnar.png");
+    background-image: url("https://occ-0-759-185.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABTYctxxbe-UkKEdlMxXm4FVGD6DqTHkQ0TQ5CQJ9jbOMnG0CYxYcSICcTUQz8DrB7CpKUGpqJVMtEqksLlvSJx2ac3Ak.png?r=a41");
     background-size: cover;
     background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 3px solid var(--black);
   }
 
   &--nickname {
