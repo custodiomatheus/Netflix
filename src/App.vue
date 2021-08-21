@@ -21,6 +21,10 @@ ul {
   padding: 0;
 }
 
+input {
+  outline: none;
+}
+
 :root {
   --black: #141414;
   --white: #fff;
