@@ -6,15 +6,27 @@
       <h1 class="login--title">Entrar</h1>
 
       <form class="login--form">
-        <input class="login--email" type="email" placeholder="Email" />
-        <input class="login--password" type="password" placeholder="Senha" />
+        <input
+          v-model="email"
+          class="login--email"
+          type="email"
+          placeholder="Email"
+        />
+        <input
+          v-model="password"
+          class="login--password"
+          type="password"
+          placeholder="Senha"
+        />
 
         <button class="login--button" @click="login">Entrar</button>
 
         <div class="login--actions">
           <div>
             <input type="checkbox" id="check-remember" />
-            <label class="login--remember" for="check-remember">Lembre-se de mim</label>
+            <label class="login--remember" for="check-remember"
+              >Lembre-se de mim</label
+            >
           </div>
 
           <label class="login--register">Cadastre-se agora</label>
@@ -26,19 +38,52 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-
+import { mapActions, mapGetters } from "vuex";
 import Header from "../components/Header.vue";
+import api from "../service/api";
 
 @Options({
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  computed: {
+    ...mapGetters("account", ["getToken"]),
+  },
+  methods: {
+    ...mapActions("account", ["ActionSetToken", "ActionSetId"]),
+  },
   components: {
     Header,
   },
 })
 export default class Login extends Vue {
+  email!: string;
+  password!: string;
+  getToken!: string | undefined;
+  ActionSetToken!: (token: string) => void;
+  ActionSetId!: (id: number) => void;
 
   login(e: any) {
     e.preventDefault();
-    this.$router.push("/profiles");
+
+    api
+      .post("/account/login", {
+        email: this.email,
+        password: this.password,
+      })
+      .then((response) => {
+        const { id, token } = response.data;
+        
+        this.ActionSetToken(token);
+        this.ActionSetId(id);
+        this.$router.push("/profiles");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
 </script>
@@ -80,19 +125,19 @@ export default class Login extends Vue {
 
   ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #8C8C8C;
+    color: #8c8c8c;
     font-size: 14px;
   }
 
   :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
-    color: #8C8C8C;
+    color: #8c8c8c;
     font-size: 14px;
   }
 
   ::-ms-input-placeholder {
     /* Microsoft Edge */
-    color: #8C8C8C;
+    color: #8c8c8c;
     font-size: 14px;
   }
 
