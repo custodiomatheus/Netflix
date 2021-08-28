@@ -1,4 +1,4 @@
-export default interface SeriesType {
+export default interface ShowType {
   title: string,
   genres: string,
   items: []
