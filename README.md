@@ -1,11 +1,11 @@
 # Vuetflix
 Netflix clone, in addition to registration and login part, it is possible to link many users to a account, to be able to bookmark and view the series and movies watched (unfortunately it is not possible to actually watch it, but a very creative solution is being planned), it is also possible to search for some specific content.
 
-## Como rodar o projeto
+## How run the project
 
-### Requisitos
-Tenha o Node na versão ≥ 10.15 instalado em seu computador.
-Com o Node instalado siga o passo a passo abaixo ;)
+### Requests
+Have the NodeJs version ≥ 10.15 installed on your computer.
+With the NodeJs installed, follow the steps below ;)
 
 1. Clone the repository, you can dowload the .zip or use the follow command
 ```bash
