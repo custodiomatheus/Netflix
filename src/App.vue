@@ -1,6 +1,17 @@
 <template>
+  <Header />
   <router-view />
 </template>
+
+<script>
+import Header from "./components/Header.vue"
+export default {
+
+  components: {
+    Header
+  }
+}
+</script>
 
 <style lang="scss">
 * {
@@ -36,6 +47,10 @@ input {
 
 .fab {
   font-size: 30px;
+  cursor: pointer;
+}
+
+.material-icons {
   cursor: pointer;
 }
 </style>
