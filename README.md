@@ -28,6 +28,8 @@ npm start
 5. Last but not least, open some browser in the follow url
 http://localhost:8080
 
+![Pagina inicial](./index.png)
+
 ## Technologies
 * axios
 * dotenv
