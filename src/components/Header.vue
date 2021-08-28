@@ -98,11 +98,11 @@ export default class Header extends Vue {
     window.addEventListener("scroll", this.handleScroll);
   }
 
-  mounted() {
+  mounted(): void {
     this.validateSeachShow();
   }
 
-  validateSeachShow() {
+  validateSeachShow(): void {
     if (this.$route.path === "/search" && !this.searchShow) {
       this.$router.push("/home");
       document.getElementById("input-search")?.blur();
@@ -118,7 +118,7 @@ export default class Header extends Vue {
     this.$emit("handlePage");
   }
 
-  search() {
+  search(): void {
     document
       .getElementById("input-search")
       ?.classList.add("input-search-focus");
