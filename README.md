@@ -36,4 +36,5 @@ http://localhost:8080
 * vue-router
 * vuex
 * vuex-persist
+* typescript
 
