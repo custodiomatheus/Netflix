@@ -5,7 +5,6 @@
       @closeUserForm="closeUserForm"
       :isAddUser="true"
     />
-    <Header />
 
     <section class="profile">
       <h1 class="profile--title">Quem está assistindo?</h1>
@@ -64,12 +63,9 @@ import { User } from "../types/UserType";
   computed: {
     ...mapGetters("account", ["getToken", "getId"]),
     ...mapGetters("user", ["getUserId", "getNickname"]),
-  },
-  methods: {
-    ...mapActions("user", ["ActionSetId", "ActionSetUserNickname"]),
-  },
+  }
 })
-export default class Profile extends Vue {
+export default class Profiles extends Vue {
   getToken!: string | undefined;
   getId!: string | undefined;
   users!: User[];
