@@ -1,24 +1,30 @@
 <template>
   <section
     class="feature"
-    :style="{
-      'background-image': `url(https://image.tmdb.org/t/p/original${serie.backdrop_path})`,
-    }"
+    :style="[
+      show.backdrop_path
+        ? {
+            'background-image': `url(https://image.tmdb.org/t/p/original/${show.backdrop_path})`,
+          }
+        : '',
+    ]"
   >
     <div class="feature--transparence">
-      <h1 class="feature--name">{{ serie.original_name }}</h1>
+      <h1 class="feature--name">
+        {{ show.original_name || show.original_title }}
+      </h1>
       <div class="feature--info">
-        <span class="feature--points">{{ serie.vote_average }} pontos</span>
+        <span class="feature--points">{{ show.vote_average }} pontos</span>
         <span class="feature--year">{{
-          releaseYear(serie.first_air_date) || ""
+          releaseYear(show.first_air_date) || ""
         }}</span>
-        <span class="feature--seasons">
-          {{ serie.number_of_seasons }} 
-          temporada{{ serie.number_of_seasons > 1 ? "s" : "" }}
+        <span class="feature--seasons" v-if="showType === 'tv'">
+          {{ show.number_of_seasons }}
+          temporada{{ show.number_of_seasons > 1 ? "s" : "" }}
         </span>
       </div>
 
-      <p v-if="serie.overview" class="feature--description">
+      <p v-if="show.overview" class="feature--description">
         {{ shortedOverview }}
         ...
       </p>
@@ -35,8 +41,8 @@
 
       <div class="feature--genres">
         <strong>Gêneros: </strong>
-        <span v-for="(genre, index) in serie.genres" :key="genre.id">
-          {{ genre.name }} {{ index == serie.genres?.length - 1 ? "" : ", " }}
+        <span v-for="(genre, index) in show.genres" :key="genre.id">
+          {{ genre.name }} {{ index == show.genres?.length - 1 ? "" : ", " }}
         </span>
       </div>
     </div>
@@ -46,31 +52,50 @@
 <script lang="ts">
 import { Vue, Options } from "vue-class-component";
 import api from "axios";
+import { mapGetters } from "vuex";
 
 @Options({
-  data() {
-    return {
-      serie: Object,
-    };
-  },
   props: {
-    serieId: {
+    showId: {
       type: Number,
       require: true,
+    },
+    isMovie: false,
+  },
+  data() {
+    return {
+      show: Object,
+      showType: "",
+    };
+  },
+  computed: {
+    ...mapGetters("show", ["getShowType", "getShowId"]),
+  },
+  watch: {
+    getShowType() {
+      this.findShow();
     },
   },
 })
 export default class FeatureMovie extends Vue {
-  serieId!: number;
-  serie!: any;
+  showId!: number;
+  show!: any;
+  showType!: string;
+  getShowType!: string;
+  getShowId!: number;
 
   mounted(): void {
+    this.showType = ["home", "series"].includes(this.getShowType) ? "tv" : "movie";
+    this.findShow();
+  }
+
+  findShow() {
     api
       .get(
-        `https://api.themoviedb.org/3/tv/${this.serieId}?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
+        `https://api.themoviedb.org/3/${this.showType}/${this.showId}?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
       )
       .then((response) => {
-        this.serie = response.data;
+        this.show = response.data;
       })
       .catch((error) => {
         console.log(error);
@@ -78,7 +103,7 @@ export default class FeatureMovie extends Vue {
   }
 
   get shortedOverview(): string {
-    return this.serie.overview?.slice(0, 250) || "";
+    return this.show.overview?.slice(0, 250) || "";
   }
 
   releaseYear(date: string): number {
@@ -171,9 +196,8 @@ export default class FeatureMovie extends Vue {
     margin-top: 15px;
     font-size: 18px;
     color: var(--gray);
-    
-    span {
 
+    span {
     }
   }
 }

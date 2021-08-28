@@ -1,14 +1,12 @@
 <template>
   <div>
-    <Header />
-
-    <section v-if="featureId">
-      <FeatureMovie :serieId="featureId.id" />
+    <section v-if="featureShow.id">
+      <FeatureMovie :showId="featureShow.id" />
     </section>
 
     <section class="lists">
       <ul>
-        <li v-for="serie in homeSeries" :key="serie">
+        <li v-for="serie in homeShows" :key="serie">
           <Row :title="serie.title" :series="serie.items" />
         </li>
       </ul>
@@ -20,22 +18,36 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import { mapGetters, mapActions } from "vuex";
 
 import Header from "../components/Header.vue";
 import FeatureMovie from "../components/FeatureMovie.vue";
 import Row from "../components/Row.vue";
 import Footer from "../components/Footer.vue";
 
-import SeriesType from "../types/SeriesType";
+import ShowType from "../types/ShowType";
 
 import seriesList from "../service/Tmdb";
 
 @Options({
   data() {
     return {
-      homeSeries: [] as SeriesType[],
-      featureId: 0 as number,
+      homeShows: [] as ShowType[],
+      featureShow: 0 as number,
+      sortedIndex: 0 as number,
     };
+  },
+  computed: {
+    ...mapGetters("show", ["getShowType"]),
+  },
+  methods: {
+    ...mapActions("show", ["ActionSetShowType", "ActionSetShowId"]),
+  },
+  watch: {
+    getShowType() {
+      this.featureShow = { id: 0 };
+      this.handlePage();
+    },
   },
   components: {
     Header,
@@ -45,23 +57,49 @@ import seriesList from "../service/Tmdb";
   },
 })
 export default class Home extends Vue {
-  homeSeries!: SeriesType[];
-  featureId!: 0;
+  homeShows!: ShowType[];
+  featureShow!: { id: 0 };
+  getShowType!: string;
+  sortedIndex!: number;
+  ActionSetShowType!: (page: string) => void;
+  ActionSetShowId!: (page: number) => void;
 
   async mounted(): Promise<void> {
-    await this.findSeries();
-    this.sortFeatureSerie();
+    this.ActionSetShowType("home");
+    await this.handlePage();
   }
 
-  async findSeries(): Promise<void> {
-    this.homeSeries = await seriesList.getHomeList();
+  async findShows(): Promise<void> {
+    if (this.getShowType === "home") {
+      this.homeShows = await seriesList.getHomeList();
+    } else if (this.getShowType === "movies") {
+      this.homeShows = await seriesList.getMoviesList();
+    } else if (this.getShowType === "series") {
+      this.homeShows = await seriesList.getSeriesList();
+    }
   }
 
-  sortFeatureSerie(): void {
-    this.featureId =
-      this.homeSeries[1].items[
-        Math.round(Math.random() * this.homeSeries[1].items.length)
-      ];
+  sortFeatureShow(): void {
+    const sortedIndexCopy = this.sortedIndex;
+
+    this.sortedIndex = this.sortIndex(this.homeShows[1].items.length);
+
+    if (sortedIndexCopy === this.sortedIndex || !this.featureShow.id) {
+      this.sortedIndex = this.sortIndex(this.homeShows[1].items.length);
+    }
+
+    this.featureShow = this.homeShows[1].items[this.sortedIndex];
+
+    this.ActionSetShowId(this.featureShow.id);
+  }
+
+  sortIndex(maxNumber: number): number {
+    return Math.round(Math.random() * maxNumber);
+  }
+
+  async handlePage(): Promise<void> {
+    await this.findShows();
+    this.sortFeatureShow();
   }
 }
 </script>
