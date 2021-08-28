@@ -46,7 +46,7 @@ import { User } from "../types/UserType";
     ...mapGetters("account", ["getId"]),
   },
 })
-export default class Home extends Vue {
+export default class UserForm extends Vue {
   isAddUser!: boolean;
   nickname!: string;
   user!: User;
