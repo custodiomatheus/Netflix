@@ -1,33 +1,24 @@
 <template>
-  <div class="movie">
-    <h2 class="movie--title">{{ title }}</h2>
-    <div class="movie--listarea">
+  <div class="show">
+    <h2 class="show--title">{{ title }}</h2>
+    <div class="show--listarea">
       <span
         v-if="marginScroll"
-        class="material-icons movie--scroll-left"
+        class="material-icons show--scroll-left"
         @click="scrollLeft"
         >arrow_back_ios_new
       </span>
-      <span @click="scrollRight" class="material-icons movie--scroll-right"
+      <span @click="scrollRight" class="material-icons show--scroll-right"
         >arrow_forward_ios</span
       >
       <ul
-        class="movie--list"
+        class="show--list"
         :style="{
           width: `${series.length * 150}px`,
           marginLeft: `${marginScroll}px`,
         }"
       >
-        <li class="movie--item" v-for="serie in series" :key="serie.id">
-          <img
-            :src="
-              serie.poster_path
-                ? `https://image.tmdb.org/t/p/w300${serie.poster_path}`
-                : ''
-            "
-            alt=""
-          />
-        </li>
+        <ShowCard v-for="serie in series" :key="serie.id" :serie="serie" />
       </ul>
     </div>
   </div>
@@ -35,6 +26,8 @@
 
 <script lang="ts">
 import { Vue, Options } from "vue-class-component";
+
+import ShowCard from "./ShowCard.vue";
 
 @Options({
   props: {
@@ -52,6 +45,10 @@ import { Vue, Options } from "vue-class-component";
     return {
       marginScroll: 0 as number,
     };
+  },
+
+  components: {
+    ShowCard,
   },
 })
 export default class Row extends Vue {
@@ -83,7 +80,7 @@ export default class Row extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.movie {
+.show {
   margin-bottom: 30px;
 
   &--title {
@@ -133,23 +130,6 @@ export default class Row extends Vue {
   &--list {
     display: flex;
     transition: all ease 0.5s;
-  }
-
-  &--item {
-    min-width: 150px;
-    height: 225px;
-    background-color: var(--gray);
-    cursor: pointer;
-    transform: scale(0.9);
-    transition: all ease 0.2s;
-
-    &:hover {
-      transform: scale(1);
-    }
-
-    img {
-      width: 100%;
-    }
   }
 }
 </style>
