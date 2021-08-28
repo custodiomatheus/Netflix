@@ -26,11 +26,11 @@ export default {
   },
   actions: {
     ActionSetUserId(context: any, value: number): void {
-      context.commit("setId", value);
+      context.commit("setUserId", value);
     },
 
     ActionSetUserNickname(context: any, value: string): void {
-      context.commit("setNickname", value);
+      context.commit("setUserNickname", value);
     },
   },
 };
