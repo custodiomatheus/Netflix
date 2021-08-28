@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/",
-    redirect: "/login"
+    redirect: "/login",
   },
   {
     path: "/login",
@@ -24,7 +24,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/profiles",
     name: "Profiles",
     component: () => import("../views/Profiles.vue"),
-  }
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: () => import("../views/Search.vue"),
+  },
 ];
 
 const router = createRouter({

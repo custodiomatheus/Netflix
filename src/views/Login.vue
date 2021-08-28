@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <Header />
 
     <section class="login">
       <h1 class="login--title">
@@ -49,8 +48,9 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapGetters } from "vuex";
-import Header from "../components/Header.vue";
 import axios from "axios";
+
+import Header from "../components/Header.vue";
 
 interface Flat {
   id: number;
@@ -107,7 +107,7 @@ export default class Login extends Vue {
     this.isRegister ? this.register() : this.login();
   }
 
-  register() {
+  register(): void {
     axios
       .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/account`, {
         email: this.email,
@@ -126,7 +126,7 @@ export default class Login extends Vue {
       })
       .then((response) => {
         const { id, token } = response.data;
-
+        
         this.ActionSetToken(token);
         this.ActionSetId(id);
         this.$router.push("/profiles");
