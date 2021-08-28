@@ -27,3 +27,13 @@ npm start
 ```
 6. Last but not least, open some browser in the follow url
 http://localhost:8080
+
+## Technologies
+* axios
+* dotenv
+* vue
+* vue-class-component
+* vue-router
+* vuex
+* vuex-persist
+
