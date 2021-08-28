@@ -1,5 +1,5 @@
 # Vuetflix
-Netflix clone, in addition to registration and login part, it is possible to link many users to a account, to be able to bookmark and view the series and movies watched (unfortunately it is not possible to actually watch it, but a very creative solution is being planned), it is also possible to search for some specific content.
+Vuetlix is a Netflix clone using my personal API and Tmdb (https://www.themoviedb.org/documentation/api) API, in addition to registration and login part, it is possible to link many users to a account, to be able to bookmark and view the series and movies watched (unfortunately it is not possible to actually watch it, but a very creative solution is being planned), it is also possible to search for some specific content.
 
 ## How run the project
 
