@@ -11,21 +11,21 @@ With the NodeJs installed, follow the steps below ;)
 ```bash
 git clone https://github.com/custodiomatheus/Vuetflix.git
 ```
-3. Access the project folder
+2. Access the project folder
 ```bash
 cd Vuetflix
 ```
-5. Run the command below to install all project dependencies
+3. Run the command below to install all project dependencies
 ```bash
 npm install
 ```
 PS: this can take a few seconds....
 
-5. Run the command below to initialize the project
+4. Run the command below to initialize the project
 ```bash
 npm start
 ```
-6. Last but not least, open some browser in the follow url
+5. Last but not least, open some browser in the follow url
 http://localhost:8080
 
 ## Technologies
