@@ -14,11 +14,16 @@
       <ul
         class="show--list"
         :style="{
-          width: `${series.length * 150}px`,
+          width: `${series.items.length * 350}px`,
           marginLeft: `${marginScroll}px`,
         }"
       >
-        <ShowCard v-for="serie in series" :key="serie.id" :serie="serie" />
+        <ShowCard
+          v-for="serie in series.items"
+          :key="serie.id"
+          :serie="serie"
+          :type="series.type"
+        />
       </ul>
     </div>
   </div>
@@ -36,7 +41,7 @@ import ShowCard from "./ShowCard.vue";
       require: true,
     },
     series: {
-      type: Array,
+      type: Object,
       require: true,
     },
   },
@@ -53,7 +58,7 @@ import ShowCard from "./ShowCard.vue";
 })
 export default class Row extends Vue {
   title!: string;
-  series!: [];
+  series!: any;
   marginScroll!: number;
 
   scrollLeft(): void {
@@ -68,7 +73,7 @@ export default class Row extends Vue {
 
   scrollRight(): void {
     let amountSroll = this.marginScroll - Math.round(window.innerWidth / 2);
-    const listSeriesSize = this.series.length * 150;
+    const listSeriesSize = this.series.items.length * 350;
 
     if (window.innerWidth - listSeriesSize > amountSroll) {
       amountSroll = window.innerWidth - listSeriesSize - 60;
@@ -90,7 +95,7 @@ export default class Row extends Vue {
   &--scroll-left,
   &--scroll-right {
     width: 40px;
-    height: 225px;
+    height: 195px;
     font-size: 40px;
     background-color: rgba(0, 0, 0, 0.6);
     opacity: 0;
