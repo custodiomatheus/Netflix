@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <section v-if="featureShow.id">
+  <div v-if="featureShow.id">
+    <section>
       <FeatureMovie :showId="featureShow.id" />
     </section>
 
     <section class="lists">
       <ul>
         <li v-for="serie in homeShows" :key="serie">
-          <Row :title="serie.title" :series="serie.items" />
+          <Row :title="serie.title" :series="serie" />
         </li>
       </ul>
     </section>

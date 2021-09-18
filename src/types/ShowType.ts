@@ -1,5 +1,5 @@
 export default interface ShowType {
-  title: string,
-  genres: string,
-  items: []
+  title: string;
+  genres: string;
+  items: [];
 }

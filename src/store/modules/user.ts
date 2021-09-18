@@ -1,4 +1,4 @@
-import { User } from "../../types/UserType"; 
+import { User } from "../../types/UserType";
 
 export default {
   namespaced: true,
