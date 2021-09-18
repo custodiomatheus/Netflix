@@ -85,7 +85,9 @@ export default class FeatureMovie extends Vue {
   getShowId!: number;
 
   mounted(): void {
-    this.showType = ["home", "series"].includes(this.getShowType) ? "tv" : "movie";
+    this.showType = ["home", "series"].includes(this.getShowType)
+      ? "tv"
+      : "movie";
     this.findShow();
   }
 
