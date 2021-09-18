@@ -7,8 +7,12 @@
     </div>
 
     <div class="footer--icons">
-      <a href="https://www.linkedin.com/in/matheuscustodio/"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/custodiomatheus"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/matheuscustodio/"
+        ><i class="fab fa-linkedin"></i
+      ></a>
+      <a href="https://github.com/custodiomatheus"
+        ><i class="fab fa-github"></i
+      ></a>
     </div>
   </footer>
 </template>
@@ -36,7 +40,7 @@ export default class Foooter extends Vue {}
   &--icons {
     position: absolute;
     right: 2vw;
-  
+
     a:visited {
       color: inherit;
     }
@@ -45,6 +49,5 @@ export default class Foooter extends Vue {}
       margin-right: 15px;
     }
   }
-
 }
 </style>

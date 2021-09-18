@@ -17,35 +17,40 @@
 
       <nav
         class="primary-nav"
-        v-if="['/search', '/home'].includes($route.path)"
+        v-if="['/search', '/home', '/my-list'].includes($route.path)"
       >
         <ul class="primary-nav-list">
           <li
-            :class="getShowType === 'home' ? 'active' : ''"
-            @click="handlePage('home')"
+            :class="actualScreen === 'home' ? 'active' : ''"
+            @click="handleTab('home')"
           >
             Início
           </li>
           <li
-            :class="getShowType === 'series' ? 'active' : ''"
-            @click="handlePage('series')"
+            :class="actualScreen === 'series' ? 'active' : ''"
+            @click="handleTab('series')"
           >
             Séries
           </li>
           <li
-            :class="getShowType === 'movies' ? 'active' : ''"
-            @click="handlePage('movies')"
+            :class="actualScreen === 'movies' ? 'active' : ''"
+            @click="handleTab('movies')"
           >
             Filmes
           </li>
-          <li>Minha Lista</li>
+          <li
+            :class="actualScreen === 'my-list' ? 'active' : ''"
+            @click="handlePage('my-list')"
+          >
+            Minha Lista
+          </li>
         </ul>
       </nav>
     </div>
 
     <nav
       class="secondary-nav"
-      v-if="['/search', '/home'].includes($route.path)"
+      v-if="['/search', '/home', '/my-list'].includes($route.path)"
     >
       <input
         type="search"
@@ -54,6 +59,7 @@
         v-model="searchShow"
       />
       <i class="material-icons search-icon" @click="search">search</i>
+      <span class="secondary-nav--logout" @click="logout">Sair</span>
     </nav>
   </header>
 </template>
@@ -74,6 +80,7 @@ import { mapActions, mapGetters } from "vuex";
   },
   methods: {
     ...mapActions("show", ["ActionSetShowType"]),
+    ...mapActions("account", ["ActionSetToken", "ActionSetId"]),
   },
   watch: {
     searchShow() {
@@ -93,6 +100,8 @@ export default class Header extends Vue {
   getShowType!: string;
   searchShow!: string;
   ActionSetShowType!: (page: string) => void;
+  ActionSetToken!: (token: string | undefined) => void;
+  ActionSetId!: (id: number | undefined) => void;
 
   created(): void {
     window.addEventListener("scroll", this.handleScroll);
@@ -100,6 +109,10 @@ export default class Header extends Vue {
 
   mounted(): void {
     this.validateSeachShow();
+  }
+
+  get actualScreen(): string {
+    return this.$route.path === "/my-list" ? "my-list" : this.getShowType;
   }
 
   validateSeachShow(): void {
@@ -114,6 +127,11 @@ export default class Header extends Vue {
   }
 
   handlePage(page: string): void {
+    this.$router.push(page);
+  }
+
+  handleTab(page: string): void {
+    if (this.$route.path !== "/home") this.handlePage("home");
     this.ActionSetShowType(page);
     this.$emit("handlePage");
   }
@@ -122,6 +140,12 @@ export default class Header extends Vue {
     document
       .getElementById("input-search")
       ?.classList.add("input-search-focus");
+  }
+
+  logout(): void {
+    this.ActionSetToken(undefined);
+    this.ActionSetId(undefined);
+    this.$router.push("/");
   }
 }
 </script>
@@ -145,7 +169,6 @@ header {
   top: 0;
   z-index: 2;
   transition: background-color 0.5s;
-  // background-color: green;
 
   h1 {
     font-size: 32px;
@@ -192,7 +215,6 @@ header {
 
     .search-icon {
       position: absolute;
-      left: 10px;
       font-size: 28px;
     }
 
@@ -206,16 +228,19 @@ header {
       transition: all 0.2s ease;
     }
 
-    // .input-search:focus {
-    //   width: 260px;
-    //   border-width: 1px;
-    //   background-color: var(--black);
-    // }
-
     .input-search-focus {
       width: 260px;
       border-width: 1px;
       background-color: var(--black);
+    }
+
+    .secondary-nav--logout {
+      cursor: pointer;
+      font-weight: bold;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
