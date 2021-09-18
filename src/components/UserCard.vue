@@ -1,5 +1,10 @@
 <template>
-  <UserForm v-if="isUserFormOpen" :user="user" :title="false" @closeUserForm="closeUserForm" />
+  <UserForm
+    v-if="isUserFormOpen"
+    :user="user"
+    :title="false"
+    @closeUserForm="closeUserForm"
+  />
   <div :class="['user', { 'is-edit': isManage }]" @click="selectedUser">
     <div :class="['user--card']">
       <i v-if="isManage" class="material-icons user--edit"> edit </i>
@@ -33,7 +38,12 @@ import { User } from "../types/UserType";
     },
   },
   methods: {
-    ...mapActions("user", ["ActionSetUserId", "ActionSetUserNickname"]),
+    ...mapActions("user", [
+      "ActionSetUserId",
+      "ActionSetUserNickname",
+      "ActionSetUserFavorites",
+      "ActionSetUserWatched",
+    ]),
   },
   components: {
     UserForm,
@@ -45,6 +55,8 @@ export default class UserCard extends Vue {
   isUserFormOpen!: boolean;
   ActionSetUserId!: (id: number) => void;
   ActionSetUserNickname!: (nickname: string) => void;
+  ActionSetUserFavorites!: (favorites: number[]) => void;
+  ActionSetUserWatched!: (favorites: number[]) => void;
 
   selectedUser(): void {
     this.isManage ? this.startEditUser() : this.redirectUserHome();
@@ -70,7 +82,7 @@ export default class UserCard extends Vue {
 .user {
   text-align: center;
   word-break: break-all;
-  width: 165px;
+  min-width: 165px;
   cursor: pointer;
   position: relative;
 

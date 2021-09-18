@@ -30,6 +30,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "Search",
     component: () => import("../views/Search.vue"),
   },
+  {
+    path: "/my-list",
+    name: "MyList",
+    component: () => import("../views/MyList.vue"),
+  },
 ];
 
 const router = createRouter({
