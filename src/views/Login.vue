@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-
     <section class="login">
       <h1 class="login--title">
         {{ isRegister ? "Crie sua assinatura" : "Entrar" }}
@@ -126,7 +125,7 @@ export default class Login extends Vue {
       })
       .then((response) => {
         const { id, token } = response.data;
-        
+
         this.ActionSetToken(token);
         this.ActionSetId(id);
         this.$router.push("/profiles");

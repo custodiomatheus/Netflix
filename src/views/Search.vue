@@ -40,14 +40,11 @@ export default class Search extends Vue {
   }
 
   findShows() {
-    console.log(this.$route.query.q);
-
     axios
       .get(
         `https://api.themoviedb.org/3/search/multi?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR&query=${this.$route.query.q}&page=1&include_adult=false`
       )
       .then((response) => {
-        console.log(response.data);
         this.shows = response.data.results;
       })
       .catch((error) => {

@@ -63,7 +63,7 @@ import { User } from "../types/UserType";
   computed: {
     ...mapGetters("account", ["getToken", "getId"]),
     ...mapGetters("user", ["getUserId", "getNickname"]),
-  }
+  },
 })
 export default class Profiles extends Vue {
   getToken!: string | undefined;
@@ -120,7 +120,6 @@ export default class Profiles extends Vue {
 
 .container {
   width: 100%;
-  position: fixed;
 }
 
 .profile {
@@ -138,6 +137,7 @@ export default class Profiles extends Vue {
     width: 100%;
     height: auto;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 3.5%;
