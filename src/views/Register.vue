@@ -1,36 +1,31 @@
 <template>
   <div class="container">
-    <section class="login">
-      <h1 class="login--title">Entrar</h1>
+    <section class="register">
+      <h1 class="register--title">Crie sua assinatura</h1>
 
-      <form class="login--form">
+      <form class="register--form">
         <input
           v-model="email"
-          class="login--email"
+          class="register--email"
           type="email"
           placeholder="Email"
         />
         <input
           v-model="password"
-          class="login--password"
+          class="register--password"
           type="password"
           placeholder="Senha"
         />
 
-        <button class="login--button" @click.prevent="login">Entrar</button>
+        <select v-model="flat" class="register--flat">
+          <option :value="flat" v-for="(flat, index) in flats" :key="flat.id">
+            {{ flat.name }} - {{ flatPrice[index] }}
+          </option>
+        </select>
 
-        <div v-if="!isRegister" class="login--actions">
-          <div>
-            <input type="checkbox" id="check-remember" />
-            <label class="login--remember" for="check-remember"
-              >Lembre-se de mim</label
-            >
-          </div>
-
-          <label class="login--register" @click="registerRedirect"
-            >Cadastre-se agora</label
-          >
-        </div>
+        <button class="register--button" @click.prevent="register">
+          Cadastre-se
+        </button>
       </form>
     </section>
   </div>
@@ -38,7 +33,6 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 
 import Header from "../components/Header.vue";
@@ -55,47 +49,46 @@ interface Flat {
       email: "" as string,
       password: "" as string,
       flat: {} as Flat,
-      isRegister: false as boolean,
       flats: [] as Flat[],
     };
-  },
-  computed: {
-    ...mapGetters("account", ["getToken"]),
-  },
-  methods: {
-    ...mapActions("account", ["ActionSetToken", "ActionSetId"]),
   },
   components: {
     Header,
   },
 })
-export default class Login extends Vue {
+export default class Register extends Vue {
   email!: string;
   password!: string;
+  flat!: Flat;
+  flats!: Flat[];
   getToken!: string | undefined;
-  ActionSetToken!: (token: string) => void;
-  ActionSetId!: (id: number) => void;
 
-  login(): void {
+  mounted(): void {
+    this.findFlats();
+  }
+
+  get flatPrice(): string[] {
+    return this.flats.map(flat => `R$ ${flat.price.toString().replace('.', ',')}`)
+  }
+
+  findFlats(): void {
     axios
-      .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/accounts/login`, {
-        email: this.email,
-        password: this.password,
-      })
-      .then((response) => {
-        const { id, token } = response.data;
-
-        this.ActionSetToken(token);
-        this.ActionSetId(id);
-        this.$router.push("/profiles");
-      })
+      .get(`http://${process.env.VUE_APP_ROOT_BASE_URL}/flats`)
+      .then((response) => (this.flats = [...response.data]))
       .catch((error) => {
         console.error(error);
       });
   }
 
-  registerRedirect(): void {
-    this.$router.push("/register");
+  register(): void {
+    axios
+      .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/accounts`, {
+        email: this.email,
+        password: this.password,
+        flat: this.flat,
+      })
+      .then(() => this.$router.push("/login"))
+      .catch((error) => console.log(error));
   }
 }
 </script>
@@ -109,7 +102,7 @@ export default class Login extends Vue {
   width: 100%;
   position: fixed;
 }
-.login {
+.register {
   width: 430px;
   height: 500px;
   background-color: rgba(#000000, 0.75);
