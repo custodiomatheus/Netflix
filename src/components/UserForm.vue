@@ -58,7 +58,7 @@ export default class UserForm extends Vue {
 
   saveUser(): void {
     api
-      .post("/user", {
+      .post("/users", {
         nickname: this.nickname,
         account: {
           id: this.getId,
@@ -74,7 +74,7 @@ export default class UserForm extends Vue {
     this.user.nickname = this.nickname;
 
     api
-      .patch("/user", this.user)
+      .patch("/users", this.user)
       .then(() => this.closeUserForm())
       .catch((error) => {
         console.log(error);

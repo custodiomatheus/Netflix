@@ -3,8 +3,10 @@
     <h2 class="my-list--title">Minha Lista</h2>
 
     <ul class="my-list--list">
-      <li class="my-list--item" v-for="show in shows" :key="show">
-        <span class="material-icons my-list--icon" @click="removeFavorite(show)"
+      <li class="my-list--item" v-for="(show, index) in shows" :key="show">
+        <span
+          class="material-icons my-list--icon"
+          @click="removeFavorite(show, index)"
           >check_circle</span
         >
         <img
@@ -27,14 +29,11 @@ import api from "../service/api";
 interface Favorite {
   user: {
     id: number;
-    nickname: string;
   };
   show: {
     id: number;
     type: string;
   };
-  is_favorite: boolean;
-  is_watched: boolean;
 }
 
 @Options({
@@ -73,16 +72,17 @@ export default class MyList extends Vue {
 
   async findUsersFavorites() {
     try {
-      const response = await api.get(
-        `/users-shows/user/favorite/${this.getUserId}`
-      );
-      this.favorites = [...response.data];
+      const response = await api.get(`/users/favorites/${this.getUserId}`);
+
+      if (response.data) {
+        this.favorites = [...response.data.favorites];
+      }
     } catch (error) {
       console.log(error);
     }
   }
 
-  removeFavorite(show: any) {
+  removeFavorite(show: any, showIndex: number) {
     let favoriteIndex = -1;
 
     const favoriteToRemove = this.favorites.find(
@@ -95,15 +95,15 @@ export default class MyList extends Vue {
     );
 
     api
-      .put(`/users-shows`, {
-        user: favoriteToRemove?.user,
-        show: favoriteToRemove?.show,
-        is_favorite: false,
-        is_watched: favoriteToRemove?.is_watched,
+      .delete(`/favorites`, {
+        data: {
+          user: favoriteToRemove?.user,
+          show: favoriteToRemove?.show,
+        },
       })
       .then(() => {
         this.favorites.splice(favoriteIndex, 1);
-        this.shows.splice(favoriteIndex, 1);
+        this.shows.splice(showIndex, 1);
       })
       .catch((error) => {
         console.log(error);

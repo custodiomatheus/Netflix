@@ -3,6 +3,13 @@
     <span class="material-icons card-icon" @click="addFavorite"
       >add_circle_outline</span
     >
+    <button
+      v-if="$route.path === '/home'"
+      class="card-watch"
+      @click="addWatched"
+    >
+      Assistir
+    </button>
     <img class="card-image" :src="imageUrl" :alt="serie.original_title" />
   </li>
 </template>
@@ -40,39 +47,18 @@ export default class ShowCard extends Vue {
   }
 
   addFavorite(): void {
-    console.log(this.serie);
-    
     api
-      .put(`/users-shows`, {
+      .post(`/favorites`, {
         user: {
           id: this.getUserId,
         },
         show: {
           id: this.serie.id,
           type: this.type || this.serie.media_type,
-        },
-        is_favorite: true,
-        is_watched: false,
+        }
       })
-      .then(response => {
+      .then((response) => {
         console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  addWatched(): void {
-    api
-      .put(`/users-shows`, {
-        user: {
-          id: this.getUserId,
-        },
-        show: {
-          id: this.serie.id,
-        },
-        is_favorite: false,
-        is_watched: true,
       })
       .catch((error) => {
         console.log(error);
@@ -96,6 +82,26 @@ export default class ShowCard extends Vue {
   display: none;
 }
 
+.card-watch {
+  background-color: var(--white);
+  color: var(--black);
+  padding: 5px 15px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  z-index: 1;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
 .card-home {
   width: 350px;
   height: 195px;
@@ -111,7 +117,8 @@ export default class ShowCard extends Vue {
     filter: brightness(30%);
   }
 
-  &:hover .card-icon {
+  &:hover .card-icon,
+  &:hover .card-watch {
     display: flex;
   }
 

@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 import Header from "../components/Header.vue";
 import UserCard from "../components/UserCard.vue";
@@ -78,7 +78,7 @@ export default class Profiles extends Vue {
 
   findAccountProfiles(): void {
     api
-      .get(`/account/users/${this.getId}`)
+      .get(`/accounts/users/${this.getId}`)
       .then((response) => {
         this.users = [...response.data.users];
       })
