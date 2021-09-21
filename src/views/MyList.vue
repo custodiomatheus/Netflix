@@ -57,7 +57,8 @@ export default class MyList extends Vue {
     this.findShowData();
   }
 
-  findShowData() {
+  findShowData(): void {
+    // TODO -> USAR O PROMISE.ALL
     this.favorites.map(async (favorite) => {
       try {
         const response = await axios.get(
@@ -70,7 +71,7 @@ export default class MyList extends Vue {
     });
   }
 
-  async findUsersFavorites() {
+  async findUsersFavorites(): Promise<void> {
     try {
       const response = await api.get(`/users/favorites/${this.getUserId}`);
 
@@ -82,7 +83,7 @@ export default class MyList extends Vue {
     }
   }
 
-  removeFavorite(show: any, showIndex: number) {
+  removeFavorite(show: any, showIndex: number): void {
     let favoriteIndex = -1;
 
     const favoriteToRemove = this.favorites.find(

@@ -68,7 +68,9 @@ export default class Register extends Vue {
   }
 
   get flatPrice(): string[] {
-    return this.flats.map(flat => `R$ ${flat.price.toString().replace('.', ',')}`)
+    return this.flats.map(
+      (flat) => `R$ ${flat.price.toString().replace(".", ",")}`
+    );
   }
 
   findFlats(): void {
