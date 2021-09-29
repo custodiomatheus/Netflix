@@ -33,6 +33,7 @@ ul {
 
 input {
   outline: none;
+  border: none;
 }
 
 :root {
@@ -53,7 +54,7 @@ input {
   cursor: pointer;
 }
 
-// .field-error {
-//   border: 2px solid var(--red) !important;
-// }
+.field-error {
+  border: 1px solid #e87c03;
+}
 </style>
