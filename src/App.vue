@@ -52,4 +52,8 @@ input {
 .material-icons {
   cursor: pointer;
 }
+
+// .field-error {
+//   border: 2px solid var(--red) !important;
+// }
 </style>

@@ -36,9 +36,9 @@ export default {
       {
         title: "Recomendados",
         genres: "trending",
-        type: "all",
+        type: "tv",
         items: await find(
-          `trending/all/week?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
+          `trending/tv/week?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
         ),
       },
 

@@ -1,32 +1,47 @@
 <template>
   <div class="container">
-    <section class="register">
-      <h1 class="register--title">Crie sua assinatura</h1>
+    <section class="flats">
+      <h1 class="flats--title">Selecione um plano</h1>
 
-      <form class="register--form">
-        <input
-          v-model="email"
-          class="register--email"
-          type="email"
-          placeholder="Email"
-        />
-        <input
-          v-model="password"
-          class="register--password"
-          type="password"
-          placeholder="Senha"
-        />
+      <ul class="flats--list">
+        <li class="flats--item" v-for="flat in flats" :key="flat">
+          <input
+            type="radio"
+            name="flat"
+            class="flats--radio"
+            :id="flat.id"
+            @click="selectFlat(flat)"
+          />
+          <FlatCard :flat="flat" class="flats--element" />
+        </li>
+      </ul>
+    </section>
 
-        <select v-model="flat" class="register--flat">
-          <option :value="flat" v-for="(flat, index) in flats" :key="flat.id">
-            {{ flat.name }} - {{ flatPrice[index] }}
-          </option>
-        </select>
+    <section class="form">
+      <div class="register">
+        <h1 class="register--title">Cadastrar</h1>
 
-        <button class="register--button" @click.prevent="register">
-          Cadastre-se
-        </button>
-      </form>
+        <form class="register--form">
+          <input
+            id="email"
+            v-model="email"
+            class="register--email"
+            type="email"
+            placeholder="Email"
+          />
+          <input
+            id="password"
+            v-model="password"
+            class="register--password"
+            type="password"
+            placeholder="Senha"
+          />
+
+          <button class="register--button" @click.prevent="register">
+            Cadastrar
+          </button>
+        </form>
+      </div>
     </section>
   </div>
 </template>
@@ -35,12 +50,15 @@
 import { Options, Vue } from "vue-class-component";
 import axios from "axios";
 
-import Header from "../components/Header.vue";
+import FlatCard from "@/components/Register/FlatCard.vue";
+
+// import { validateEmail } from "@/helpers/validation";
 
 interface Flat {
   id: number;
   name: string;
   price: number;
+  amountScreen: number;
 }
 
 @Options({
@@ -53,8 +71,11 @@ interface Flat {
     };
   },
   components: {
-    Header,
+    FlatCard,
   },
+  // methods: {
+  //   validateEmail,
+  // },
 })
 export default class Register extends Vue {
   email!: string;
@@ -62,6 +83,7 @@ export default class Register extends Vue {
   flat!: Flat;
   flats!: Flat[];
   getToken!: string | undefined;
+  // validateEmail!: (email: string) => boolean;
 
   mounted(): void {
     this.findFlats();
@@ -71,6 +93,10 @@ export default class Register extends Vue {
     return this.flats.map(
       (flat) => `R$ ${flat.price.toString().replace(".", ",")}`
     );
+  }
+
+  selectFlat(flat: Flat): void {
+    this.flat = flat;
   }
 
   findFlats(): void {
@@ -97,91 +123,135 @@ export default class Register extends Vue {
 
 <style lang="scss" scoped>
 .container {
-  background-image: url("../assets/background-login.png");
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
   width: 100%;
-  position: fixed;
+  min-height: 100vh;
+  background-color: var(--white);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8%;
 }
-.register {
-  width: 430px;
-  height: 500px;
-  background-color: rgba(#000000, 0.75);
-  margin: 20vh auto 0;
-  padding: 45px 65px 0;
-  border-radius: 8px;
 
-  &--form {
+.flats,
+.form {
+  max-width: 45vw;
+  height: 100%;
+}
+
+.flats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media screen and (max-width: 700px) {
+    & {
+      margin-bottom: 3%;
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    & {
+      padding-top: 5%;
+    }
+  }
+
+  &--title {
+    font-size: 30px;
+    color: var(--red);
+    text-align: center;
+    margin: 0;
+  }
+
+  &--list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5%;
+  }
+
+  &--item {
+    position: relative;
+    margin-top: 3%;
+
+    &:nth-child(3n) {
+      align-self: flex-end;
+    }
+  }
+
+  &--radio {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &--email,
-  &--password,
-  &--flat {
-    width: inherit;
-    height: 45px;
-    padding-left: 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--gray-secondary);
-    color: var(--white);
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-
-  ::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #8c8c8c;
-    font-size: 14px;
-  }
-
-  :-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: #8c8c8c;
-    font-size: 14px;
-  }
-
-  ::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: #8c8c8c;
-    font-size: 14px;
-  }
-
-  &--button,
-  &--remember,
-  &--register {
+    height: 100%;
+    position: absolute;
+    opacity: 0;
     cursor: pointer;
-  }
 
-  &--button {
-    height: 47px;
-    border: none;
-    border-radius: 5px;
-    color: var(--white);
-    background-color: var(--red);
-    font-size: 18px;
-    font-weight: 700;
-    margin: 20px 0;
+    &:checked:checked + .flats--element {
+      background: red;
+    }
   }
+}
 
-  &--actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  &--remember {
-    font-size: 12px;
-    font-weight: lighter;
-    cursor: pointer;
-  }
+  .register {
+    width: 400px;
+    height: 380px;
+    background-color: rgba(#000000, 0.75);
+    padding: 45px 50px 0;
+    border-radius: 8px;
 
-  &--register {
-    font-size: 14px;
-    font-weight: normal;
+    &--form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &--email,
+    &--password {
+      width: inherit;
+      height: 45px;
+      padding-left: 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--gray-secondary);
+      color: var(--white);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    ::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #8c8c8c;
+      font-size: 14px;
+    }
+
+    :-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: #8c8c8c;
+      font-size: 14px;
+    }
+
+    ::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: #8c8c8c;
+      font-size: 14px;
+    }
+
+    &--button {
+      height: 47px;
+      border: none;
+      border-radius: 5px;
+      color: var(--white);
+      background-color: var(--red);
+      font-size: 18px;
+      font-weight: 700;
+      margin: 20px 0 0;
+      cursor: pointer;
+    }
   }
 }
 </style>

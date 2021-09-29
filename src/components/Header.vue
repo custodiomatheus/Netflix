@@ -1,5 +1,6 @@
 <template>
   <header
+    v-if="$route.path !== '/register'"
     :class="[
       topDistance
         ? 'background-solid'

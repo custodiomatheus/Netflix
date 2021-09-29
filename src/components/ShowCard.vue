@@ -1,15 +1,8 @@
 <template>
   <li :class="$route.path === '/home' ? 'card-home' : 'card-search'">
-    <span class="material-icons card-icon" @click="addFavorite"
-      >add_circle_outline</span
-    >
-    <button
-      v-if="$route.path === '/home'"
-      class="card-watch"
-      @click="addWatched"
-    >
-      Assistir
-    </button>
+    <span class="material-icons card-icon" :id="serie.id" @click="addFavorite">
+      add_circle_outline
+    </span>
     <img class="card-image" :src="imageUrl" :alt="serie.original_title" />
   </li>
 </template>
@@ -55,7 +48,7 @@ export default class ShowCard extends Vue {
         show: {
           id: this.serie.id,
           type: this.type || this.serie.media_type,
-        }
+        },
       })
       .then((response) => {
         console.log(response);

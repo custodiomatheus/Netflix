@@ -27,6 +27,7 @@
       </div>
 
       <span
+        v-if="users.length"
         @click="verifyStartOrFinishEdit"
         :class="`profile--manage${isManage ? '-finish' : '-start'}`"
       >
