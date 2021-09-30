@@ -43,6 +43,7 @@ input {
   --gray: #a7a7a7;
   --gray-secondary: #333;
   --green: #46d369;
+  --orange: #e87c03
 }
 
 .fab {
@@ -55,6 +56,6 @@ input {
 }
 
 .field-error {
-  border: 1px solid #e87c03;
+  border: 1px solid var(--orange);
 }
 </style>
