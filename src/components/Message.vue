@@ -1,5 +1,5 @@
 <template>
-  <div class="message">
+  <div class="message" :style="{'background-color': color}">
     <span>
       {{ message }}
     </span>
@@ -15,6 +15,10 @@ import { Options, Vue } from "vue-class-component";
       type: String,
       require: true,
     },
+    color: {
+      type: String,
+      require: true
+    }
   },
 })
 export default class Message extends Vue {}

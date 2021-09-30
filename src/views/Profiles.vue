@@ -1,5 +1,12 @@
 <template>
   <div class="container">
+    <div class="message">
+      <Message
+        v-if="usersMessage"
+        :message="usersMessage"
+        :color="'var(--orange)'"
+      />
+    </div>
     <UserForm
       v-if="isUserFormOpen"
       @closeUserForm="closeUserForm"
@@ -41,9 +48,10 @@
 import { Options, Vue } from "vue-class-component";
 import { mapGetters } from "vuex";
 
-import Header from "../components/Header.vue";
-import UserCard from "../components/UserCard.vue";
-import UserForm from "../components/UserForm.vue";
+import Header from "@/components/Header.vue";
+import UserCard from "@/components/UserCard.vue";
+import UserForm from "@/components/UserForm.vue";
+import Message from "@/components/Message.vue";
 
 import api from "../service/api";
 import { User } from "../types/UserType";
@@ -54,12 +62,14 @@ import { User } from "../types/UserType";
       users: [] as User[],
       isManage: false as boolean,
       isUserFormOpen: false as boolean,
+      usersMessage: "",
     };
   },
   components: {
     Header,
     UserCard,
     UserForm,
+    Message,
   },
   computed: {
     ...mapGetters("account", ["getToken", "getId"]),
@@ -70,6 +80,7 @@ export default class Profiles extends Vue {
   getToken!: string | undefined;
   getId!: string | undefined;
   users!: User[];
+  usersMessage!: string;
   isManage!: boolean;
   isUserFormOpen!: boolean;
 
@@ -81,14 +92,21 @@ export default class Profiles extends Vue {
     api
       .get(`/accounts/users/${this.getId}`)
       .then((response) => {
-        this.users = [...response.data.users];
+        if (response.status === 204) {
+          this.usersMessage = "Cadastre seu primeiro usuário";
+        }
+
+        if (response.data.users) {
+          this.users = [...response.data.users];
+        }
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   }
 
   startAddUser(): void {
+    this.usersMessage = "";
     this.isUserFormOpen = true;
   }
 
@@ -121,6 +139,12 @@ export default class Profiles extends Vue {
 
 .container {
   width: 100%;
+}
+
+.message {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .profile {

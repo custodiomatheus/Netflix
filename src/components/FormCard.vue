@@ -2,7 +2,7 @@
   <section class="form">
     <div class="card">
       <h1 class="card--title">{{ title }}</h1>
-      <Message v-if="actionError" :message="actionError" />
+      <Message v-if="actionError" :message="actionError" :color="'var(--orange)'" />
       <form class="card--form">
         <div class="card--item">
           <input

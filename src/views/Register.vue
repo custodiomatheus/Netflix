@@ -52,8 +52,12 @@ export default class Register extends Vue {
   flat!: Flat;
   flats!: Flat[];
 
-  mounted(): void {
-    this.findFlats();
+  async mounted(): Promise<void> {
+    await this.findFlats();
+
+    if (this.flats.length) {
+      this.flat = this.flats[0];
+    }
   }
 
   get flatPrice(): string[] {
@@ -66,26 +70,30 @@ export default class Register extends Vue {
     this.flat = flat;
   }
 
-  findFlats(): void {
-    axios
-      .get(`http://${process.env.VUE_APP_ROOT_BASE_URL}/flats`)
-      .then((response) => (this.flats = [...response.data]))
-      .catch((error) => {
-        console.error(error);
-      });
+  async findFlats(): Promise<void> {
+    try {
+      const response = await axios.get(
+        `http://${process.env.VUE_APP_ROOT_BASE_URL}/flats`
+      );
+      this.flats = [...response.data];
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   register(credentials: { email: string; password: string }): void {
     const { email, password } = credentials;
 
-    axios
-      .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/accounts`, {
-        email,
-        password,
-        flat: this.flat,
-      })
-      .then(() => this.$router.push("/login"))
-      .catch((error) => console.log(error));
+    if (this.flat.id) {
+      axios
+        .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/accounts`, {
+          email,
+          password,
+          flat: this.flat,
+        })
+        .then(() => this.$router.push("/login"))
+        .catch((error) => console.log(error));
+    }
   }
 }
 </script>

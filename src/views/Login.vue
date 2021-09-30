@@ -59,7 +59,7 @@ export default class Login extends Vue {
       .catch((error) => {
         if ([403, 401].includes(error.response.status)) {
           this.loginError =
-            "Desculpe, não encontramos nenhuma conta com esse email e / ou senha. Tente novamente ou cadastre-se.";
+            "Desculpe, seu email e / ou senha estão inválidos :/. Tente novamente ou cadastre-se.";
         }
       });
   }
