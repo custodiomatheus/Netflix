@@ -1,38 +1,12 @@
 <template>
   <div class="container">
-    <section class="login">
-      <h1 class="login--title">Entrar</h1>
-
-      <form class="login--form">
-        <input
-          v-model="email"
-          class="login--email"
-          type="email"
-          placeholder="Email"
-        />
-        <input
-          v-model="password"
-          class="login--password"
-          type="password"
-          placeholder="Senha"
-        />
-
-        <button class="login--button" @click.prevent="login">Entrar</button>
-
-        <div v-if="!isRegister" class="login--actions">
-          <div>
-            <input type="checkbox" id="check-remember" />
-            <label class="login--remember" for="check-remember"
-              >Lembre-se de mim</label
-            >
-          </div>
-
-          <label class="login--register" @click="registerRedirect"
-            >Cadastre-se agora</label
-          >
-        </div>
-      </form>
-    </section>
+    <FormCard
+      title="Login"
+      action="Entrar"
+      :isLogin="true"
+      v-on:action="login"
+      :actionError="loginError"
+    />
   </div>
 </template>
 
@@ -42,21 +16,12 @@ import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 
 import Header from "../components/Header.vue";
-
-interface Flat {
-  id: number;
-  name: string;
-  price: number;
-}
+import FormCard from "../components/FormCard.vue";
 
 @Options({
   data() {
     return {
-      email: "" as string,
-      password: "" as string,
-      flat: {} as Flat,
-      isRegister: false as boolean,
-      flats: [] as Flat[],
+      loginError: "",
     };
   },
   computed: {
@@ -67,35 +32,36 @@ interface Flat {
   },
   components: {
     Header,
+    FormCard,
   },
 })
 export default class Login extends Vue {
-  email!: string;
-  password!: string;
   getToken!: string | undefined;
+  loginError!: string;
   ActionSetToken!: (token: string) => void;
   ActionSetId!: (id: number) => void;
 
-  login(): void {
+  login(credentials: { email: string; password: string }): void {
+    const { email, password } = credentials;
     axios
       .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/accounts/login`, {
-        email: this.email,
-        password: this.password,
+        email,
+        password,
       })
       .then((response) => {
         const { id, token } = response.data;
 
+        this.loginError = "";
         this.ActionSetToken(token);
         this.ActionSetId(id);
         this.$router.push("/profiles");
       })
       .catch((error) => {
-        console.error(error);
+        if ([403, 401].includes(error.response.status)) {
+          this.loginError =
+            "Desculpe, não encontramos nenhuma conta com esse email e / ou senha. Tente novamente ou cadastre-se.";
+        }
       });
-  }
-
-  registerRedirect(): void {
-    this.$router.push("/register");
   }
 }
 </script>
@@ -108,85 +74,7 @@ export default class Login extends Vue {
   height: 100vh;
   width: 100%;
   position: fixed;
-}
-.login {
-  width: 430px;
-  height: 500px;
-  background-color: rgba(#000000, 0.75);
-  margin: 20vh auto 0;
-  padding: 45px 65px 0;
-  border-radius: 8px;
-
-  &--form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &--email,
-  &--password,
-  &--flat {
-    width: inherit;
-    height: 45px;
-    padding-left: 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--gray-secondary);
-    color: var(--white);
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-
-  ::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #8c8c8c;
-    font-size: 14px;
-  }
-
-  :-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: #8c8c8c;
-    font-size: 14px;
-  }
-
-  ::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: #8c8c8c;
-    font-size: 14px;
-  }
-
-  &--button,
-  &--remember,
-  &--register {
-    cursor: pointer;
-  }
-
-  &--button {
-    height: 47px;
-    border: none;
-    border-radius: 5px;
-    color: var(--white);
-    background-color: var(--red);
-    font-size: 18px;
-    font-weight: 700;
-    margin: 20px 0;
-  }
-
-  &--actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &--remember {
-    font-size: 12px;
-    font-weight: lighter;
-    cursor: pointer;
-  }
-
-  &--register {
-    font-size: 14px;
-    font-weight: normal;
-  }
+  display: flex;
+  justify-content: center;
 }
 </style>

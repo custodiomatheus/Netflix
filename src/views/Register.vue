@@ -18,41 +18,7 @@
       </ul>
     </section>
 
-    <section class="form">
-      <div class="register">
-        <h1 class="register--title">Cadastrar</h1>
-
-        <form class="register--form">
-          <div class="register--item">
-            <input
-              v-model="email"
-              :class="['register--email', { 'field-error': error.email }]"
-              type="email"
-              placeholder="Email"
-            />
-            <label v-if="error.email" class="register--error"
-              >Informe um email válido.</label
-            >
-          </div>
-
-          <div class="register--item">
-            <input
-              v-model="password"
-              :class="['register--password', { 'field-error': error.password }]"
-              type="password"
-              placeholder="Senha"
-            />
-            <label v-if="error.password" class="register--error"
-              >A senha deve ter no mínimo 8 caracteres.</label
-            >
-          </div>
-
-          <button class="register--button" @click.prevent="register">
-            Cadastrar
-          </button>
-        </form>
-      </div>
-    </section>
+    <FormCard title="Cadastro" action="Cadastrar" v-on:action="register" />
   </div>
 </template>
 
@@ -61,8 +27,7 @@ import { Options, Vue } from "vue-class-component";
 import axios from "axios";
 
 import FlatCard from "@/components/Register/FlatCard.vue";
-
-import { validateEmail } from "@/helpers/validation";
+import FormCard from "@/components/FormCard.vue";
 
 interface Flat {
   id: number;
@@ -74,42 +39,18 @@ interface Flat {
 @Options({
   data() {
     return {
-      email: "" as string,
-      password: "" as string,
       flat: {} as Flat,
       flats: [] as Flat[],
-      error: {
-        email: false,
-        password: false,
-        flat: false,
-      },
     };
   },
   components: {
     FlatCard,
-  },
-  methods: {
-    validateEmail,
-  },
-  watch: {
-    email() {
-      this.error.email = !this.validateEmail(this.email);
-    },
-    password() {
-      if (this.error.password) {
-        this.error.password = this.password.length <= 8;
-      }
-    },
+    FormCard,
   },
 })
 export default class Register extends Vue {
-  email!: string;
-  password!: string;
   flat!: Flat;
   flats!: Flat[];
-  getToken!: string | undefined;
-  error!: { email: boolean; password: boolean; flat: boolean };
-  validateEmail!: (email: string) => boolean;
 
   mounted(): void {
     this.findFlats();
@@ -134,21 +75,17 @@ export default class Register extends Vue {
       });
   }
 
-  register(): void {
-    this.error.email = !this.validateEmail(this.email);
-    this.error.password = this.password.length <= 8;
+  register(credentials: { email: string; password: string }): void {
+    const { email, password } = credentials;
 
-    
-    if (!this.error.email && !this.error.password) {
-      axios
-        .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/accounts`, {
-          email: this.email,
-          password: this.password,
-          flat: this.flat,
-        })
-        .then(() => this.$router.push("/login"))
-        .catch((error) => console.log(error));
-    }
+    axios
+      .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/accounts`, {
+        email,
+        password,
+        flat: this.flat,
+      })
+      .then(() => this.$router.push("/login"))
+      .catch((error) => console.log(error));
   }
 }
 </script>
