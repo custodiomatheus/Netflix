@@ -61,6 +61,13 @@
       />
       <i class="material-icons search-icon" @click="search">search</i>
       <span class="secondary-nav--logout" @click="logout">Sair</span>
+      <img
+        class="secondary-nav--user"
+        src="https://occ-0-759-185.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABTYctxxbe-UkKEdlMxXm4FVGD6DqTHkQ0TQ5CQJ9jbOMnG0CYxYcSICcTUQz8DrB7CpKUGpqJVMtEqksLlvSJx2ac3Ak.png?r=a41"
+        height="35"
+        alt="User Icon"
+        @click="toogleUser"
+      />
     </nav>
   </header>
 </template>
@@ -148,6 +155,10 @@ export default class Header extends Vue {
     this.ActionSetId(undefined);
     this.$router.push("/");
   }
+
+  toogleUser(): void {
+    this.$router.push("/profiles");
+  }
 }
 </script>
 
@@ -217,6 +228,7 @@ header {
     .search-icon {
       position: absolute;
       font-size: 28px;
+      left: 5px;
     }
 
     .input-search {
@@ -238,10 +250,15 @@ header {
     .secondary-nav--logout {
       cursor: pointer;
       font-weight: bold;
+      margin: 0 25px 0 10px;
 
       &:hover {
         text-decoration: underline;
       }
+    }
+
+    .secondary-nav--user {
+      cursor: pointer;
     }
   }
 }
