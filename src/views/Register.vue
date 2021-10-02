@@ -102,7 +102,7 @@ export default class Register extends Vue {
 .container {
   width: 100%;
   min-height: 100vh;
-  background-color: var(--white);
+  background-color: var(--black);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -164,7 +164,7 @@ export default class Register extends Vue {
     cursor: pointer;
 
     &:checked:checked + .flats--element {
-      background: red;
+      background-color: var(--red);
     }
   }
 }
