@@ -1,5 +1,7 @@
-import store from "@/store";
 import axios from "axios";
+
+import router from "@/router";
+import store from "@/store";
 
 const api = axios.create({
   baseURL: `http://${process.env.VUE_APP_ROOT_BASE_URL}`,
@@ -24,5 +26,15 @@ const api = axios.create({
     },
   ],
 });
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      store.dispatch("account/ActionResetAccount");
+      router.push("/");
+    }
+  }
+);
 
 export default api;
