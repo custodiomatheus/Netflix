@@ -1,11 +1,13 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  RouteRecordRaw,
+  RouterView,
+} from "vue-router";
+
+import store from "@/store";
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/home",
-    name: "Home",
-    component: () => import("../views/Home.vue"),
-  },
   {
     path: "/",
     redirect: "/login",
@@ -21,25 +23,47 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/Register.vue"),
   },
   {
-    path: "/profiles",
-    name: "Profiles",
-    component: () => import("../views/Profiles.vue"),
-  },
-  {
-    path: "/search",
-    name: "Search",
-    component: () => import("../views/Search.vue"),
-  },
-  {
-    path: "/my-list",
-    name: "MyList",
-    component: () => import("../views/MyList.vue"),
+    path: "/browse",
+    component: RouterView,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: "/profiles",
+        name: "Profiles",
+        component: () => import("../views/Profiles.vue"),
+      },
+      {
+        path: "/home",
+        name: "Home",
+        component: () => import("../views/Home.vue"),
+      },
+      {
+        path: "/search",
+        name: "Search",
+        component: () => import("../views/Search.vue"),
+      },
+      {
+        path: "/my-list",
+        name: "MyList",
+        component: () => import("../views/MyList.vue"),
+      },
+    ],
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !store.getters["account/getToken"]) {
+    next({
+      path: "/",
+    });
+  } else {
+    next();
+  }
 });
 
 export default router;
