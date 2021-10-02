@@ -2,7 +2,7 @@
   <div class="card">
     <h2 class="card--title">Plano {{ flat.name }}</h2>
     <h3 class="card--subtitle">
-      {{ flat.amountScreen }} Tela - R$ {{ flat.price.replace(".", ",") }}
+      {{ flat.amountScreen }} Usuários - R$ {{ flat.price.replace(".", ",") }}
     </h3>
 
     <div class="card--options">
@@ -27,8 +27,6 @@
         <label class="card--label" for="">Mês gratuito de teste </label>
       </div>
     </div>
-
-    <button class="card--button">Selecionar</button>
   </div>
 </template>
 
@@ -89,17 +87,6 @@ export default class FlatCard extends Vue {
 
   &--label {
     font-size: 15px;
-  }
-
-  &--button {
-    padding: 8px 28px;
-    background-color: var(--red);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    color: var(--white);
-    font-size: 12px;
   }
 }
 </style>
