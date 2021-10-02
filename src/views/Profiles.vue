@@ -1,12 +1,5 @@
 <template>
   <div class="container">
-    <div class="message">
-      <Message
-        v-if="usersMessage"
-        :message="usersMessage"
-        :color="'var(--orange)'"
-      />
-    </div>
     <UserForm
       v-if="isUserFormOpen"
       @closeUserForm="closeUserForm"
@@ -25,7 +18,7 @@
         />
 
         <i
-          v-if="users.length < 5"
+          v-if="users.length < amountScreen"
           @click="startAddUser"
           class="material-icons profile--add"
         >
@@ -55,6 +48,7 @@ import Message from "@/components/Message.vue";
 
 import api from "../service/api";
 import { User } from "../types/UserType";
+import { Flat } from "@/types/FlatType";
 
 @Options({
   data() {
@@ -72,13 +66,14 @@ import { User } from "../types/UserType";
     Message,
   },
   computed: {
-    ...mapGetters("account", ["getToken", "getId"]),
+    ...mapGetters("account", ["getToken", "getId", "getFlat"]),
     ...mapGetters("user", ["getUserId", "getNickname"]),
   },
 })
 export default class Profiles extends Vue {
   getToken!: string | undefined;
   getId!: string | undefined;
+  getFlat!: Flat | undefined;
   users!: User[];
   usersMessage!: string;
   isManage!: boolean;
@@ -86,6 +81,10 @@ export default class Profiles extends Vue {
 
   mounted(): void {
     this.findAccountProfiles();
+  }
+
+  get amountScreen(): number | undefined {
+    return this.getFlat?.amountScreen;
   }
 
   findAccountProfiles(): void {
@@ -101,7 +100,7 @@ export default class Profiles extends Vue {
         }
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error);
       });
   }
 
