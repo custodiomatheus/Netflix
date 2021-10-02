@@ -6,7 +6,7 @@
     @closeUserForm="closeUserForm"
   />
   <div :class="['user', { 'is-edit': isManage }]" @click="selectedUser">
-    <div :class="['user--card']">
+    <div class="user--card">
       <i v-if="isManage" class="material-icons user--edit"> edit </i>
     </div>
     <p :class="['user--nickname']">{{ user.nickname }}</p>

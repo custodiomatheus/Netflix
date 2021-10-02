@@ -1,9 +1,12 @@
 <template>
   <div class="modal">
     <div class="modal--content">
-      <h1 class="modal--title">
-        {{ isAddUser ? "Adicionar perfil" : "Editar perfil" }}
-      </h1>
+      <div class="modal--header">
+        <span class="material-icons" @click="closeUserForm()"> arrow_back </span>
+        <h1 class="modal--title">
+          {{ isAddUser ? "Adicionar perfil" : "Editar perfil" }}
+        </h1>
+      </div>
       <hr />
       <form class="modal--form" action="">
         <input v-model="nickname" class="modal--nickname" type="text" />
@@ -100,7 +103,18 @@ export default class UserForm extends Vue {
     width: 50%;
     height: 100%;
     margin: 0 auto;
-    padding: 5vh 5vw;
+    padding: 10vh 5vw;
+  }
+
+  &--header {
+    display: flex;
+    align-items: center;
+    gap: 2%;
+
+    .material-icons {
+      font-size: 40px;
+      position: relative;
+    }
   }
 
   &--title {
