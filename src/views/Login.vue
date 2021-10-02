@@ -18,6 +18,8 @@ import axios from "axios";
 import Header from "../components/Header.vue";
 import FormCard from "../components/FormCard.vue";
 
+import { Flat } from "@/types/FlatType";
+
 @Options({
   data() {
     return {
@@ -28,7 +30,7 @@ import FormCard from "../components/FormCard.vue";
     ...mapGetters("account", ["getToken"]),
   },
   methods: {
-    ...mapActions("account", ["ActionSetToken", "ActionSetId"]),
+    ...mapActions("account", ["ActionSetToken", "ActionSetId", "ActionSetFlat"]),
   },
   components: {
     Header,
@@ -40,6 +42,7 @@ export default class Login extends Vue {
   loginError!: string;
   ActionSetToken!: (token: string) => void;
   ActionSetId!: (id: number) => void;
+  ActionSetFlat!: (flat: Flat) => void;
 
   login(credentials: { email: string; password: string }): void {
     const { email, password } = credentials;
@@ -49,11 +52,12 @@ export default class Login extends Vue {
         password,
       })
       .then((response) => {
-        const { id, token } = response.data;
-
+        const { id, token, flat } = response.data;
+        
         this.loginError = "";
         this.ActionSetToken(token);
         this.ActionSetId(id);
+        this.ActionSetFlat(flat);
         this.$router.push("/profiles");
       })
       .catch((error) => {
