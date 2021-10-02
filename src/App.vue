@@ -39,7 +39,7 @@ input {
 :root {
   --black: #141414;
   --white: #fff;
-  --red: #e50914;
+  --red: #b9090b;
   --gray: #a7a7a7;
   --gray-secondary: #333;
   --green: #46d369;
