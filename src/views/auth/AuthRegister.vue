@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  REGISTER
+  <!-- <div class="container">
     <section class="flats">
       <h1 class="flats--title">Selecione um plano</h1>
 
@@ -19,83 +20,83 @@
     </section>
 
     <FormCard title="Cadastro" action="Cadastrar" v-on:action="register" />
-  </div>
+  </div> -->
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import axios from "axios";
+<script setup lang="ts">
+// import { Options, Vue } from "vue-class-component";
+// import axios from "axios";
 
-import FlatCard from "@/components/Register/FlatCard.vue";
-import FormCard from "@/components/FormCard.vue";
+// import FlatCard from "@/components/Register/FlatCard.vue";
+// import FormCard from "@/components/FormCard.vue";
 
-interface Flat {
-  id: number;
-  name: string;
-  price: number;
-  amountScreen: number;
-}
+// interface Flat {
+//   id: number;
+//   name: string;
+//   price: number;
+//   amountScreen: number;
+// }
 
-@Options({
-  data() {
-    return {
-      flat: {} as Flat,
-      flats: [] as Flat[],
-    };
-  },
-  components: {
-    FlatCard,
-    FormCard,
-  },
-})
-export default class Register extends Vue {
-  flat!: Flat;
-  flats!: Flat[];
+// @Options({
+//   data() {
+//     return {
+//       flat: {} as Flat,
+//       flats: [] as Flat[],
+//     };
+//   },
+//   components: {
+//     FlatCard,
+//     FormCard,
+//   },
+// })
+// export default class Register extends Vue {
+//   flat!: Flat;
+//   flats!: Flat[];
 
-  async mounted(): Promise<void> {
-    await this.findFlats();
+//   async mounted(): Promise<void> {
+//     await this.findFlats();
 
-    if (this.flats.length) {
-      this.flat = this.flats[0];
-    }
-  }
+//     if (this.flats.length) {
+//       this.flat = this.flats[0];
+//     }
+//   }
 
-  get flatPrice(): string[] {
-    return this.flats.map(
-      (flat) => `R$ ${flat.price.toString().replace(".", ",")}`
-    );
-  }
+//   get flatPrice(): string[] {
+//     return this.flats.map(
+//       (flat) => `R$ ${flat.price.toString().replace(".", ",")}`
+//     );
+//   }
 
-  selectFlat(flat: Flat): void {
-    this.flat = flat;
-  }
+//   selectFlat(flat: Flat): void {
+//     this.flat = flat;
+//   }
 
-  async findFlats(): Promise<void> {
-    try {
-      const response = await axios.get(
-        `http://${process.env.VUE_APP_ROOT_BASE_URL}/flats`
-      );
-      this.flats = [...response.data];
-    } catch (error) {
-      console.error(error);
-    }
-  }
+//   async findFlats(): Promise<void> {
+//     try {
+//       const response = await axios.get(
+//         `http://${process.env.VUE_APP_ROOT_BASE_URL}/flats`
+//       );
+//       this.flats = [...response.data];
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   }
 
-  register(credentials: { email: string; password: string }): void {
-    const { email, password } = credentials;
+//   register(credentials: { email: string; password: string }): void {
+//     const { email, password } = credentials;
 
-    if (this.flat.id) {
-      axios
-        .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/accounts`, {
-          email,
-          password,
-          flat: this.flat,
-        })
-        .then(() => this.$router.push("/login"))
-        .catch((error) => console.log(error));
-    }
-  }
-}
+//     if (this.flat.id) {
+//       axios
+//         .post(`http://${process.env.VUE_APP_ROOT_BASE_URL}/accounts`, {
+//           email,
+//           password,
+//           flat: this.flat,
+//         })
+//         .then(() => this.$router.push("/login"))
+//         .catch((error) => console.log(error));
+//     }
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>

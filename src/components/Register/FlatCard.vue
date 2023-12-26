@@ -1,5 +1,6 @@
 <template>
-  <div class="card">
+  FLAR CARD
+  <!-- <div class="card">
     <h2 class="card--title">Plano {{ flat.name }}</h2>
     <h3 class="card--subtitle">
       {{ flat.amountScreen }} Usuários - R$ {{ flat.price.replace(".", ",") }}
@@ -27,29 +28,29 @@
         <label class="card--label" for="">Mês gratuito de teste </label>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+// import { Options, Vue } from "vue-class-component";
 
-interface Flat {
-  id: number;
-  name: string;
-  price: number;
-}
+// interface Flat {
+//   id: number;
+//   name: string;
+//   price: number;
+// }
 
-@Options({
-  props: {
-    flat: {
-      type: Object,
-      require: true,
-    },
-  },
-})
-export default class FlatCard extends Vue {
-  flat!: Flat;
-}
+// @Options({
+//   props: {
+//     flat: {
+//       type: Object,
+//       require: true,
+//     },
+//   },
+// })
+// export default class FlatCard extends Vue {
+//   flat!: Flat;
+// }
 </script>
 
 <style lang="scss" scoped>

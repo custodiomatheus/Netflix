@@ -18,9 +18,9 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+// import { Vue } from "vue-class-component";
 
-export default class Foooter extends Vue {}
+// export default class Foooter extends Vue {}
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,6 @@
 <template>
-  <div class="show">
+  ROW
+  <!-- <div class="show">
     <h2 class="show--title">{{ title }}</h2>
     <div class="show--listarea">
       <span
@@ -26,62 +27,62 @@
         />
       </ul>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
-import { Vue, Options } from "vue-class-component";
+// import { Vue, Options } from "vue-class-component";
 
-import ShowCard from "./ShowCard.vue";
+// import ShowCard from "./ShowCard.vue";
 
-@Options({
-  props: {
-    title: {
-      type: String,
-      require: true,
-    },
-    series: {
-      type: Object,
-      require: true,
-    },
-  },
+// @Options({
+//   props: {
+//     title: {
+//       type: String,
+//       require: true,
+//     },
+//     series: {
+//       type: Object,
+//       require: true,
+//     },
+//   },
 
-  data() {
-    return {
-      marginScroll: 0 as number,
-    };
-  },
+//   data() {
+//     return {
+//       marginScroll: 0 as number,
+//     };
+//   },
 
-  components: {
-    ShowCard,
-  },
-})
-export default class Row extends Vue {
-  title!: string;
-  series!: any;
-  marginScroll!: number;
+//   components: {
+//     ShowCard,
+//   },
+// })
+// export default class Row extends Vue {
+//   title!: string;
+//   series!: any;
+//   marginScroll!: number;
 
-  scrollLeft(): void {
-    let amountSroll = this.marginScroll + Math.round(window.innerWidth / 2);
+//   scrollLeft(): void {
+//     let amountSroll = this.marginScroll + Math.round(window.innerWidth / 2);
 
-    if (amountSroll > 0) {
-      amountSroll = 0;
-    }
+//     if (amountSroll > 0) {
+//       amountSroll = 0;
+//     }
 
-    this.marginScroll = amountSroll;
-  }
+//     this.marginScroll = amountSroll;
+//   }
 
-  scrollRight(): void {
-    let amountSroll = this.marginScroll - Math.round(window.innerWidth / 2);
-    const listSeriesSize = this.series.items.length * 350;
+//   scrollRight(): void {
+//     let amountSroll = this.marginScroll - Math.round(window.innerWidth / 2);
+//     const listSeriesSize = this.series.items.length * 350;
 
-    if (window.innerWidth - listSeriesSize > amountSroll) {
-      amountSroll = window.innerWidth - listSeriesSize - 60;
-    }
+//     if (window.innerWidth - listSeriesSize > amountSroll) {
+//       amountSroll = window.innerWidth - listSeriesSize - 60;
+//     }
 
-    this.marginScroll = amountSroll;
-  }
-}
+//     this.marginScroll = amountSroll;
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>

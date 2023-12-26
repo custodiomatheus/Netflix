@@ -1,5 +1,6 @@
 <template>
-  <div class="modal">
+  USER FORM
+  <!-- <div class="modal">
     <div class="modal--content">
       <div class="modal--header">
         <span class="material-icons" @click="closeUserForm()"> arrow_back </span>
@@ -19,75 +20,75 @@
         </button>
       </form>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import { mapGetters } from "vuex";
+// import { Options, Vue } from "vue-class-component";
+// import { mapGetters } from "vuex";
 
-import api from "../service/api";
-import { User } from "../types/UserType";
+// import api from "../service/api";
+// import { User } from "../types/UserType";
 
-@Options({
-  data() {
-    return {
-      nickname: "" as string,
-    };
-  },
-  props: {
-    isAddUser: {
-      type: Boolean,
-      require: true,
-    },
-    user: {
-      type: Object,
-      require: false,
-    },
-  },
-  computed: {
-    ...mapGetters("account", ["getId"]),
-  },
-})
-export default class UserForm extends Vue {
-  isAddUser!: boolean;
-  nickname!: string;
-  user!: User;
-  getId!: string | undefined;
+// @Options({
+//   data() {
+//     return {
+//       nickname: "" as string,
+//     };
+//   },
+//   props: {
+//     isAddUser: {
+//       type: Boolean,
+//       require: true,
+//     },
+//     user: {
+//       type: Object,
+//       require: false,
+//     },
+//   },
+//   computed: {
+//     ...mapGetters("account", ["getId"]),
+//   },
+// })
+// export default class UserForm extends Vue {
+//   isAddUser!: boolean;
+//   nickname!: string;
+//   user!: User;
+//   getId!: string | undefined;
 
-  mounted(): void {
-    this.nickname = this.user?.nickname;
-  }
+//   mounted(): void {
+//     this.nickname = this.user?.nickname;
+//   }
 
-  saveUser(): void {
-    api
-      .post("/users", {
-        nickname: this.nickname,
-        account: {
-          id: this.getId,
-        },
-      })
-      .then(() => this.closeUserForm())
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+//   saveUser(): void {
+//     api
+//       .post("/users", {
+//         nickname: this.nickname,
+//         account: {
+//           id: this.getId,
+//         },
+//       })
+//       .then(() => this.closeUserForm())
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }
 
-  updateUser(): void {
-    this.user.nickname = this.nickname;
+//   updateUser(): void {
+//     this.user.nickname = this.nickname;
 
-    api
-      .patch("/users", this.user)
-      .then(() => this.closeUserForm())
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+//     api
+//       .patch("/users", this.user)
+//       .then(() => this.closeUserForm())
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }
 
-  closeUserForm(): void {
-    this.$emit("closeUserForm");
-  }
-}
+//   closeUserForm(): void {
+//     this.$emit("closeUserForm");
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>
