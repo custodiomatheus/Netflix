@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  PROFILES
+  <!-- <div class="container">
     <UserForm
       v-if="isUserFormOpen"
       @closeUserForm="closeUserForm"
@@ -34,98 +35,98 @@
         {{ isManage ? "OK" : "Gerenciar Perfis" }}
       </span>
     </section>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import { mapGetters } from "vuex";
+// import { Options, Vue } from "vue-class-component";
+// import { mapGetters } from "vuex";
 
-import Header from "@/components/Header.vue";
-import UserCard from "@/components/UserCard.vue";
-import UserForm from "@/components/UserForm.vue";
-import Message from "@/components/Message.vue";
+// import Header from "@/components/Header.vue";
+// import UserCard from "@/components/UserCard.vue";
+// import UserForm from "@/components/UserForm.vue";
+// import Message from "@/components/Message.vue";
 
-import api from "../service/api";
-import { User } from "../types/UserType";
-import { Flat } from "@/types/FlatType";
+// import api from "../service/api";
+// import { User } from "../types/UserType";
+// import { Flat } from "@/types/FlatType";
 
-@Options({
-  data() {
-    return {
-      users: [] as User[],
-      isManage: false as boolean,
-      isUserFormOpen: false as boolean,
-      usersMessage: "",
-    };
-  },
-  components: {
-    Header,
-    UserCard,
-    UserForm,
-    Message,
-  },
-  computed: {
-    ...mapGetters("account", ["getToken", "getId", "getFlat"]),
-    ...mapGetters("user", ["getUserId", "getNickname"]),
-  },
-})
-export default class Profiles extends Vue {
-  getToken!: string | undefined;
-  getId!: string | undefined;
-  getFlat!: Flat | undefined;
-  users!: User[];
-  usersMessage!: string;
-  isManage!: boolean;
-  isUserFormOpen!: boolean;
+// @Options({
+//   data() {
+//     return {
+//       users: [] as User[],
+//       isManage: false as boolean,
+//       isUserFormOpen: false as boolean,
+//       usersMessage: "",
+//     };
+//   },
+//   components: {
+//     Header,
+//     UserCard,
+//     UserForm,
+//     Message,
+//   },
+//   computed: {
+//     ...mapGetters("account", ["getToken", "getId", "getFlat"]),
+//     ...mapGetters("user", ["getUserId", "getNickname"]),
+//   },
+// })
+// export default class Profiles extends Vue {
+//   getToken!: string | undefined;
+//   getId!: string | undefined;
+//   getFlat!: Flat | undefined;
+//   users!: User[];
+//   usersMessage!: string;
+//   isManage!: boolean;
+//   isUserFormOpen!: boolean;
 
-  mounted(): void {
-    this.findAccountProfiles();
-  }
+//   mounted(): void {
+//     this.findAccountProfiles();
+//   }
 
-  get amountScreen(): number | undefined {
-    return this.getFlat?.amountScreen;
-  }
+//   get amountScreen(): number | undefined {
+//     return this.getFlat?.amountScreen;
+//   }
 
-  findAccountProfiles(): void {
-    api
-      .get(`/accounts/users/${this.getId}`)
-      .then((response) => {
-        if (response.status === 204) {
-          this.usersMessage = "Cadastre seu primeiro usuário";
-        }
+//   findAccountProfiles(): void {
+//     api
+//       .get(`/accounts/users/${this.getId}`)
+//       .then((response) => {
+//         if (response.status === 204) {
+//           this.usersMessage = "Cadastre seu primeiro usuário";
+//         }
 
-        if (response.data.users) {
-          this.users = [...response.data.users];
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+//         if (response.data.users) {
+//           this.users = [...response.data.users];
+//         }
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }
 
-  startAddUser(): void {
-    this.usersMessage = "";
-    this.isUserFormOpen = true;
-  }
+//   startAddUser(): void {
+//     this.usersMessage = "";
+//     this.isUserFormOpen = true;
+//   }
 
-  verifyStartOrFinishEdit(): void {
-    !this.isManage ? this.startEditNickname() : this.finishEditNickname();
-  }
+//   verifyStartOrFinishEdit(): void {
+//     !this.isManage ? this.startEditNickname() : this.finishEditNickname();
+//   }
 
-  startEditNickname(): void {
-    this.isManage = true;
-  }
+//   startEditNickname(): void {
+//     this.isManage = true;
+//   }
 
-  finishEditNickname(): void {
-    this.isManage = false;
-  }
+//   finishEditNickname(): void {
+//     this.isManage = false;
+//   }
 
-  closeUserForm(): void {
-    this.isUserFormOpen = false;
-    this.findAccountProfiles();
-  }
-}
+//   closeUserForm(): void {
+//     this.isUserFormOpen = false;
+//     this.findAccountProfiles();
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>

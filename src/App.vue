@@ -1,61 +1,33 @@
 <template>
-  <Header />
-  <router-view />
+  <RouterView />
 </template>
 
-<script>
-import Header from "./components/Header.vue";
-export default {
-  components: {
-    Header,
-  },
-};
+<script setup lang="ts">
+import { RouterView } from "vue-router";
 </script>
 
 <style lang="scss">
-* {
-  box-sizing: border-box;
-}
+// ul {
+//   list-style: none;
+//   margin: 0;
+//   padding: 0;
+// }
 
-body {
-  background-color: var(--black);
-  color: var(--white);
-  font-family: "Roboto", sans-serif;
-  margin: 0;
-  padding: 0;
-}
+// input {
+//   outline: none;
+//   border: none;
+// }
 
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+// .fab {
+//   font-size: 30px;
+//   cursor: pointer;
+// }
 
-input {
-  outline: none;
-  border: none;
-}
+// .material-icons {
+//   cursor: pointer;
+// }
 
-:root {
-  --black: #141414;
-  --white: #fff;
-  --red: #b9090b;
-  --gray: #a7a7a7;
-  --gray-secondary: #333;
-  --green: #46d369;
-  --orange: #e87c03
-}
-
-.fab {
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.material-icons {
-  cursor: pointer;
-}
-
-.field-error {
-  border: 1px solid var(--orange);
-}
+// .field-error {
+//   border: 1px solid var(--orange);
+// }
 </style>

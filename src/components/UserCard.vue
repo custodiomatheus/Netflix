@@ -1,5 +1,6 @@
 <template>
-  <UserForm
+  USER CARD
+  <!-- <UserForm
     v-if="isUserFormOpen"
     :user="user"
     :title="false"
@@ -10,72 +11,72 @@
       <i v-if="isManage" class="material-icons user--edit"> edit </i>
     </div>
     <p :class="['user--nickname']">{{ user.nickname }}</p>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import { mapActions } from "vuex";
+// import { Options, Vue } from "vue-class-component";
+// import { mapActions } from "vuex";
 
-import UserForm from "./UserForm.vue";
+// import UserForm from "./UserForm.vue";
 
-import { User } from "../types/UserType";
+// import { User } from "../types/UserType";
 
-@Options({
-  data() {
-    return {
-      isUserFormOpen: false as boolean,
-    };
-  },
-  props: {
-    user: {
-      type: Object,
-      require: true,
-    },
-    isManage: {
-      type: Boolean,
-      require: true,
-    },
-  },
-  methods: {
-    ...mapActions("user", [
-      "ActionSetUserId",
-      "ActionSetUserNickname",
-      "ActionSetUserFavorites",
-      "ActionSetUserWatched",
-    ]),
-  },
-  components: {
-    UserForm,
-  },
-})
-export default class UserCard extends Vue {
-  isManage!: boolean;
-  user!: User;
-  isUserFormOpen!: boolean;
-  ActionSetUserId!: (id: number) => void;
-  ActionSetUserNickname!: (nickname: string) => void;
-  ActionSetUserFavorites!: (favorites: number[]) => void;
-  ActionSetUserWatched!: (favorites: number[]) => void;
+// @Options({
+//   data() {
+//     return {
+//       isUserFormOpen: false as boolean,
+//     };
+//   },
+//   props: {
+//     user: {
+//       type: Object,
+//       require: true,
+//     },
+//     isManage: {
+//       type: Boolean,
+//       require: true,
+//     },
+//   },
+//   methods: {
+//     ...mapActions("user", [
+//       "ActionSetUserId",
+//       "ActionSetUserNickname",
+//       "ActionSetUserFavorites",
+//       "ActionSetUserWatched",
+//     ]),
+//   },
+//   components: {
+//     UserForm,
+//   },
+// })
+// export default class UserCard extends Vue {
+//   isManage!: boolean;
+//   user!: User;
+//   isUserFormOpen!: boolean;
+//   ActionSetUserId!: (id: number) => void;
+//   ActionSetUserNickname!: (nickname: string) => void;
+//   ActionSetUserFavorites!: (favorites: number[]) => void;
+//   ActionSetUserWatched!: (favorites: number[]) => void;
 
-  selectedUser(): void {
-    this.isManage ? this.startEditUser() : this.redirectUserHome();
-  }
+//   selectedUser(): void {
+//     this.isManage ? this.startEditUser() : this.redirectUserHome();
+//   }
 
-  startEditUser(): void {
-    this.isUserFormOpen = true;
-  }
+//   startEditUser(): void {
+//     this.isUserFormOpen = true;
+//   }
 
-  redirectUserHome(): void {
-    this.$router.push("/home");
-    this.ActionSetUserId(this.user.id);
-    this.ActionSetUserNickname(this.user.nickname);
-  }
+//   redirectUserHome(): void {
+//     this.$router.push("/home");
+//     this.ActionSetUserId(this.user.id);
+//     this.ActionSetUserNickname(this.user.nickname);
+//   }
 
-  closeUserForm(): void {
-    this.isUserFormOpen = false;
-  }
-}
+//   closeUserForm(): void {
+//     this.isUserFormOpen = false;
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>

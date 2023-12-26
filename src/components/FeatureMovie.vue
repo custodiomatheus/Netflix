@@ -1,5 +1,6 @@
 <template>
-  <section
+  FEATURE MOVIE
+  <!-- <section
     class="feature"
     :style="[
       show.backdrop_path
@@ -46,72 +47,72 @@
         </span>
       </div>
     </div>
-  </section>
+  </section> -->
 </template>
 
 <script lang="ts">
-import { Vue, Options } from "vue-class-component";
-import api from "axios";
-import { mapGetters } from "vuex";
+// import { Vue, Options } from "vue-class-component";
+// import api from "axios";
+// import { mapGetters } from "vuex";
 
-@Options({
-  props: {
-    showId: {
-      type: Number,
-      require: true,
-    },
-    isMovie: false,
-  },
-  data() {
-    return {
-      show: Object,
-      showType: "",
-    };
-  },
-  computed: {
-    ...mapGetters("show", ["getShowType", "getShowId"]),
-  },
-  watch: {
-    getShowType() {
-      this.findShow();
-    },
-  },
-})
-export default class FeatureMovie extends Vue {
-  showId!: number;
-  show!: any;
-  showType!: string;
-  getShowType!: string;
-  getShowId!: number;
+// @Options({
+//   props: {
+//     showId: {
+//       type: Number,
+//       require: true,
+//     },
+//     isMovie: false,
+//   },
+//   data() {
+//     return {
+//       show: Object,
+//       showType: "",
+//     };
+//   },
+//   computed: {
+//     ...mapGetters("show", ["getShowType", "getShowId"]),
+//   },
+//   watch: {
+//     getShowType() {
+//       this.findShow();
+//     },
+//   },
+// })
+// export default class FeatureMovie extends Vue {
+//   showId!: number;
+//   show!: any;
+//   showType!: string;
+//   getShowType!: string;
+//   getShowId!: number;
 
-  mounted(): void {
-    this.showType = ["home", "series"].includes(this.getShowType)
-      ? "tv"
-      : "movie";
-    this.findShow();
-  }
+//   mounted(): void {
+//     this.showType = ["home", "series"].includes(this.getShowType)
+//       ? "tv"
+//       : "movie";
+//     this.findShow();
+//   }
 
-  findShow() {
-    api
-      .get(
-        `https://api.themoviedb.org/3/${this.showType}/${this.showId}?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
-      )
-      .then((response) => {
-        this.show = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+//   findShow() {
+//     api
+//       .get(
+//         `https://api.themoviedb.org/3/${this.showType}/${this.showId}?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
+//       )
+//       .then((response) => {
+//         this.show = response.data;
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }
 
-  get shortedOverview(): string {
-    return this.show.overview?.slice(0, 250) || "";
-  }
+//   get shortedOverview(): string {
+//     return this.show.overview?.slice(0, 250) || "";
+//   }
 
-  releaseYear(date: string): number {
-    return new Date(date).getFullYear();
-  }
-}
+//   releaseYear(date: string): number {
+//     return new Date(date).getFullYear();
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>

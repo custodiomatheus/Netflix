@@ -1,5 +1,6 @@
 <template>
-  <div class="my-list">
+  MY LIST
+  <!-- <div class="my-list">
     <h2 class="my-list--title">Minha Lista</h2>
 
     <ul class="my-list--list">
@@ -16,101 +17,101 @@
         />
       </li>
     </ul>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import { mapGetters } from "vuex";
-import axios from "axios";
+// import { Options, Vue } from "vue-class-component";
+// import { mapGetters } from "vuex";
+// import axios from "axios";
 
-import api from "../service/api";
+// import api from "../service/api";
 
-interface Favorite {
-  user: {
-    id: number;
-  };
-  show: {
-    id: number;
-    type: string;
-  };
-}
+// interface Favorite {
+//   user: {
+//     id: number;
+//   };
+//   show: {
+//     id: number;
+//     type: string;
+//   };
+// }
 
-@Options({
-  data() {
-    return {
-      favorites: [] as number[],
-      shows: [],
-    };
-  },
-  computed: {
-    ...mapGetters("user", ["getUserId"]),
-  },
-})
-export default class MyList extends Vue {
-  favorites!: Favorite[];
-  shows!: any[];
-  getUserId!: number;
+// @Options({
+//   data() {
+//     return {
+//       favorites: [] as number[],
+//       shows: [],
+//     };
+//   },
+//   computed: {
+//     ...mapGetters("user", ["getUserId"]),
+//   },
+// })
+// export default class MyList extends Vue {
+//   favorites!: Favorite[];
+//   shows!: any[];
+//   getUserId!: number;
 
-  async mounted(): Promise<void> {
-    await this.findUsersFavorites();
-    this.findShowData();
-  }
+//   async mounted(): Promise<void> {
+//     await this.findUsersFavorites();
+//     this.findShowData();
+//   }
 
-  findShowData(): void {
-    // TODO -> USAR O PROMISE.ALL
-    this.favorites.map(async (favorite) => {
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/${favorite.show.type}/${favorite.show.id}?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
-        );
-        this.shows.push(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-  }
+//   findShowData(): void {
+//     // TODO -> USAR O PROMISE.ALL
+//     this.favorites.map(async (favorite) => {
+//       try {
+//         const response = await axios.get(
+//           `https://api.themoviedb.org/3/${favorite.show.type}/${favorite.show.id}?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
+//         );
+//         this.shows.push(response.data);
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     });
+//   }
 
-  async findUsersFavorites(): Promise<void> {
-    try {
-      const response = await api.get(`/users/favorites/${this.getUserId}`);
+//   async findUsersFavorites(): Promise<void> {
+//     try {
+//       const response = await api.get(`/users/favorites/${this.getUserId}`);
 
-      if (response.data) {
-        this.favorites = [...response.data.favorites];
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+//       if (response.data) {
+//         this.favorites = [...response.data.favorites];
+//       }
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
 
-  removeFavorite(show: any, showIndex: number): void {
-    let favoriteIndex = -1;
+//   removeFavorite(show: any, showIndex: number): void {
+//     let favoriteIndex = -1;
 
-    const favoriteToRemove = this.favorites.find(
-      (favorite: Favorite, index) => {
-        if (favorite.show.id === show.id) {
-          favoriteIndex = index;
-          return favorite;
-        }
-      }
-    );
+//     const favoriteToRemove = this.favorites.find(
+//       (favorite: Favorite, index) => {
+//         if (favorite.show.id === show.id) {
+//           favoriteIndex = index;
+//           return favorite;
+//         }
+//       }
+//     );
 
-    api
-      .delete(`/favorites`, {
-        data: {
-          user: favoriteToRemove?.user,
-          show: favoriteToRemove?.show,
-        },
-      })
-      .then(() => {
-        this.favorites.splice(favoriteIndex, 1);
-        this.shows.splice(showIndex, 1);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-}
+//     api
+//       .delete(`/favorites`, {
+//         data: {
+//           user: favoriteToRemove?.user,
+//           show: favoriteToRemove?.show,
+//         },
+//       })
+//       .then(() => {
+//         this.favorites.splice(favoriteIndex, 1);
+//         this.shows.splice(showIndex, 1);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>
