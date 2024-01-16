@@ -150,11 +150,12 @@ watch(
 }
 
 header {
+  height: 100px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 3.5vh 62px;
+  padding: 0 62px;
   position: fixed;
   top: 0;
   z-index: 2;
