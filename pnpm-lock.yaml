@@ -8,12 +8,18 @@ dependencies:
   '@types/node':
     specifier: ^20.10.4
     version: 20.10.4
+  '@vee-validate/rules':
+    specifier: ^4.12.4
+    version: 4.12.4(vue@3.3.11)
   axios:
     specifier: ^1.6.2
     version: 1.6.2
   core-js:
     specifier: ^3.8.3
     version: 3.34.0
+  vee-validate:
+    specifier: ^4.12.4
+    version: 4.12.4(vue@3.3.11)
   vue:
     specifier: ^3.2.13
     version: 3.3.11(typescript@4.5.5)
@@ -2225,6 +2231,14 @@ packages:
       '@typescript-eslint/types': 5.62.0
       eslint-visitor-keys: 3.4.3
     dev: true
+
+  /@vee-validate/rules@4.12.4(vue@3.3.11):
+    resolution: {integrity: sha512-r/BGZAst/0OkFJ9m+YGOzULVPZc7WQAFbAZk4UO9epDzz6KYt9fEC0rh6BbzwSf/Xw9U0JSCDOkNZ1gYNDoR5g==}
+    dependencies:
+      vee-validate: 4.12.4(vue@3.3.11)
+    transitivePeerDependencies:
+      - vue
+    dev: false
 
   /@vue/babel-helper-vue-jsx-merge-props@1.4.0:
     resolution: {integrity: sha512-JkqXfCkUDp4PIlFdDQ0TdXoIejMtTHP67/pvxlgeY+u5k3LEdKuWZ3LK6xkxo52uDoABIVyRwqVkfLQJhk7VBA==}
@@ -8868,6 +8882,11 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /type-fest@4.9.0:
+    resolution: {integrity: sha512-KS/6lh/ynPGiHD/LnAobrEFq3Ad4pBzOlJ1wAnJx9N4EYoqFhMfLIBjUT2UEx4wg5ZE+cC1ob6DCSpppVo+rtg==}
+    engines: {node: '>=16'}
+    dev: false
+
   /type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
@@ -8994,6 +9013,16 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /vee-validate@4.12.4(vue@3.3.11):
+    resolution: {integrity: sha512-rqSjMdl0l/RiGKywKhkXttUKwDlQOoxTxe31uMQiMlwK4Hbtlvr3OcQvpREp/qPTARxNKudKWCUVW/mfzuxUVQ==}
+    peerDependencies:
+      vue: ^3.3.11
+    dependencies:
+      '@vue/devtools-api': 6.5.1
+      type-fest: 4.9.0
+      vue: 3.3.11(typescript@4.5.5)
+    dev: false
 
   /vue-component-type-helpers@1.8.25:
     resolution: {integrity: sha512-NCA6sekiJIMnMs4DdORxATXD+/NRkQpS32UC+I1KQJUasx+Z7MZUb3Y+MsKsFmX+PgyTYSteb73JW77AibaCCw==}
