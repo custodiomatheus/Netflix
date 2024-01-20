@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="container__form">
-      <BaseForm title="Entrar" :schema="schema" :submit="handleLogin" />
+      <BaseForm title="Entrar" button-text="Entre" :schema="schema" :submit="handleLogin" />
 
-      <span> Não possui conta? <router-link :to="{ name: 'AuthRegister' }">Assine agora.</router-link> </span>
+      <span> Não possui conta? <router-link :to="{ name: 'Register' }">Assine agora.</router-link> </span>
     </div>
   </div>
 </template>

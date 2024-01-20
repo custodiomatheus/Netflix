@@ -1,9 +1,10 @@
 import { defineRule } from "vee-validate";
-import { alpha_spaces } from "@vee-validate/rules";
+import { alpha_spaces, confirmed } from "@vee-validate/rules";
 
 const MIN_NUMBERS_LENGTH_PHONE = 10;
 
 defineRule("alpha_spaces", alpha_spaces);
+defineRule("confirmed", confirmed);
 
 defineRule("required", (value: string): string | boolean => {
   if (!value || !value.length) {

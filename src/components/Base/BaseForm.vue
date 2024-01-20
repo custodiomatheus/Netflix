@@ -5,7 +5,7 @@
     <form @submit.prevent="onSubmit">
       <BaseFieldText v-for="{ name, ...attrs } in schema" :key="name" :name="name" :attrs="attrs" />
 
-      <BaseButton text="Entrar" :loading="isSubmitting" />
+      <BaseButton :text="buttonText" :loading="isSubmitting" />
     </form>
   </div>
 </template>
@@ -18,6 +18,7 @@ import { TextField, CheckboxField } from "@/types/FormType";
 
 const props = defineProps<{
   title?: string;
+  buttonText: string;
   submit: (formValues: any) => void;
   schema: Array<TextField | CheckboxField>;
 }>();

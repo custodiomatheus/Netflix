@@ -34,6 +34,21 @@ const actions = {
 
     return response;
   },
+
+  async handleRegister(
+    { commit }: { commit: any },
+    { userName, userEmail, userPassword }: { userName: string; userEmail: string; userPassword: string }
+  ) {
+    console.log(userName, userEmail, userPassword);
+
+    const response = await user.userRegister({ userName, userEmail, userPassword });
+
+    if (response) {
+      commit("SET_TOKEN", { token: response });
+    }
+
+    return response;
+  },
 };
 
 export default {
