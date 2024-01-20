@@ -17,7 +17,7 @@ defineRule("email", (value: string): string | boolean => {
     return true;
   }
 
-  if (!/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/.test(value)) {
+  if (!/(^[^@][a-z0-9-_.]+)(@{1})([a-z0-9-_]+[^@])(\.{1})([a-z0-9]+[^@])/i.test(value)) {
     return "Este campo deve possuir um e-mail válido (ex: xxx@xxx.com)";
   }
 
@@ -28,9 +28,11 @@ defineRule("min", (value: string, [limit]: [number]): string | boolean => {
   if (!value || !value.length) {
     return true;
   }
+
   if (value.length < limit) {
     return `O campo deve ter, ao menos, ${limit} caracteres`;
   }
+
   return true;
 });
 
@@ -38,9 +40,11 @@ defineRule("max", (value: string, [limit]: [number]): string | boolean => {
   if (!value || !value.length) {
     return true;
   }
-  if (value.length < limit) {
+
+  if (value.length > limit) {
     return `O campo deve ter, no máximo, ${limit} caracteres`;
   }
+
   return true;
 });
 

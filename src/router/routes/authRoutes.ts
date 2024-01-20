@@ -13,13 +13,13 @@ export default [
       {
         path: "/login",
         name: "AuthLogin",
-        component: () => import("@/views/auth/AuthLogin.vue"),
+        component: () => import("@/views/auth/Login.vue"),
       },
-      // {
-      //   path: "/register",
-      //   name: "AuthRegister",
-      //   component: () => import("@/views/auth/AuthRegister.vue"),
-      // },
+      {
+        path: "/register",
+        name: "AuthRegister",
+        component: () => import("@/views/auth/Register.vue"),
+      },
     ],
   },
 ];
