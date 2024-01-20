@@ -5,26 +5,27 @@
     <form @submit.prevent="onSubmit">
       <BaseFieldText v-for="{ name, ...attrs } in schema" :key="name" :name="name" :attrs="attrs" />
 
-      <BaseButton text="Entrar" />
+      <BaseButton text="Entrar" :loading="isSubmitting" />
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useForm } from "vee-validate";
-import BaseButton from "@/components/Base/BaseButton.vue";
+import BaseButton from "@/components/Base/BaseButton";
 import BaseFieldText from "@/components/Base/BaseFieldText";
 import { TextField, CheckboxField } from "@/types/FormType";
 
 const props = defineProps<{
   title?: string;
+  submit: (formValues: any) => void;
   schema: Array<TextField | CheckboxField>;
 }>();
 
-const { handleSubmit } = useForm();
+const { handleSubmit, isSubmitting } = useForm();
 
-const onSubmit = handleSubmit((formValues) => {
-  console.log(formValues);
+const onSubmit = handleSubmit(async (formValues) => {
+  await props.submit(formValues);
 });
 </script>
 
