@@ -36,31 +36,3 @@ const handleRegister = async (credentials: User) => {
   handlePageNavigation({ name: "Home" });
 };
 </script>
-
-<style lang="scss" scoped>
-.container {
-  height: 100vh;
-  width: 100%;
-  padding-top: $header-height-size;
-  background-image: url("@/assets/images/background-login.png");
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-
-  &__form {
-    width: 500px;
-    padding: 60px 68px 40px;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-radius: 4px;
-
-    > span {
-      color: $gray-700;
-
-      > a {
-        color: $white;
-      }
-    }
-  }
-}
-</style>
