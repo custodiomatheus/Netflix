@@ -11,10 +11,6 @@ import { RouterView } from "vue-router";
   height: 100vh;
   width: 100%;
   padding-top: $header-height-size;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
 }
 // ul {
 //   list-style: none;
