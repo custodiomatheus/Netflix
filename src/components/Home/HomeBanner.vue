@@ -1,12 +1,12 @@
 <template>
   <section class="banner">
     <swiper
-      loop
+      :loop="false"
       effect="fade"
       :modules="modules"
       :slides-per-view="1"
       :autoplay="{ delay: 12000 }"
-      :pagination="{ clickable: true }"
+      :pagination="{ clickable: true, enabled: false }"
     >
       <swiper-slide
         v-for="bannerTrending in bannerTrendings"
