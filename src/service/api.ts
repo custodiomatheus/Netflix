@@ -12,17 +12,17 @@ const api = axios.create({
   },
   transformRequest: [
     (data, header) => {
-      const vuexAccount = store.state.account;
-      const sessionStore = JSON.parse(sessionStorage.getItem("vuex") || "");
-      let token = undefined;
-      if (sessionStore) {
-        token = sessionStore.account.token && vuexAccount.token;
-      }
-      if (token) {
-        header["Authorization"] = `Bearer ${token}`;
-      }
+      // const vuexAccount = store.state.account;
+      // const sessionStore = JSON.parse(sessionStorage.getItem("vuex") || "");
+      // let token = undefined;
+      // if (sessionStore) {
+      //   token = sessionStore.account.token && vuexAccount.token;
+      // }
+      // if (token) {
+      //   header["Authorization"] = `Bearer ${token}`;
+      // }
 
-      return JSON.stringify(data);
+      // return JSON.stringify(data);
     },
   ],
 });

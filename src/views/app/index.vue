@@ -1,5 +1,5 @@
 <template>
-  <BaseHeader />
+  <!-- <BaseHeader /> -->
   <RouterView />
 </template>
 

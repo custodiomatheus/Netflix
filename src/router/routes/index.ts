@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from "vue-router";
 
 import authRoutes from "./authRoutes";
+import appRoutes from "./appRoutes";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -17,6 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/NotFound.vue"),
   },
   ...authRoutes,
+  ...appRoutes,
   // {
   //   path: "/login",
   //   name: "Login",

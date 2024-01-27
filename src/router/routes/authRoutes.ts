@@ -4,7 +4,7 @@ export default [
     name: "Auth",
     component: () => import("@/views/auth/index.vue"),
     redirect() {
-      return { name: "AuthLogin" };
+      return { name: "Login" };
     },
     meta: {
       public: true,
@@ -12,14 +12,14 @@ export default [
     children: [
       {
         path: "/login",
-        name: "AuthLogin",
-        component: () => import("@/views/auth/AuthLogin.vue"),
+        name: "Login",
+        component: () => import("@/views/auth/Login.vue"),
       },
-      // {
-      //   path: "/register",
-      //   name: "AuthRegister",
-      //   component: () => import("@/views/auth/AuthRegister.vue"),
-      // },
+      {
+        path: "/register",
+        name: "Register",
+        component: () => import("@/views/auth/Register.vue"),
+      },
     ],
   },
 ];

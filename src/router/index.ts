@@ -8,11 +8,11 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _, next) => {
-  if (to.meta.public === false && !store.getters["account/getToken"]) {
+  if (to.meta.public === false && !store.getters["auth/getToken"]) {
     return next({ name: "Auth" });
   }
 
-  if (to.meta.public === true && store.getters["account/getToken"]) {
+  if (to.meta.public === true && store.getters["auth/getToken"]) {
     return next({ name: "Home" });
   }
 
