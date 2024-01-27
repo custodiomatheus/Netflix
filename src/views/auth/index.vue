@@ -11,6 +11,8 @@ import HeaderAuth from "@/components/Header/HeaderAuth.vue";
 <style lang="scss">
 .container {
   &__authentication {
+    height: 100vh;
+    padding-top: $header-height-size-2;
     background-image: url("@/assets/images/background-login.png");
     background-size: cover;
     background-position: center;

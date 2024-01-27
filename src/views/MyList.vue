@@ -118,7 +118,7 @@
 .my-list {
   width: 100%;
   margin-top: 13vh;
-  padding: 0.3vh 62px 0;
+  padding: 0.3vh $padding-vertical-desktop 0;
 
   &--title {
     font-size: 26px;

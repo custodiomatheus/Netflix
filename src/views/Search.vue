@@ -59,7 +59,7 @@
 .search {
   width: 100%;
   margin-top: 13vh;
-  padding: 10vh 62px 0;
+  padding: 10vh $padding-vertical-desktop 0;
   // background-color: red;
 
   &--content {
