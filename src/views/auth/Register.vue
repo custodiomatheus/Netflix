@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useStore } from "vuex";
+import { User } from "@/types/UserType";
 import BaseForm from "@/components/Base/BaseForm";
 import useNavigate from "@/composables/useNavigate";
 import { FormDefaultFields } from "@/helpers/constants/formDefaultFields";
@@ -19,13 +20,17 @@ const store = useStore();
 const { handlePageNavigation } = useNavigate();
 
 // TODO: ADD CONFIRMAR SENHA
-const schema = ref([FormDefaultFields.FULLNAME, FormDefaultFields.EMAIL, FormDefaultFields.PASSWORD]);
+const schema = ref([
+  { ...FormDefaultFields.FULLNAME, name: "userName" },
+  { ...FormDefaultFields.EMAIL, name: "userEmail" },
+  { ...FormDefaultFields.PASSWORD, name: "userPassword" },
+]);
 
-const handleRegister = async (credentials: { name: string; email: string; password: string; lgpd: boolean }) => {
+const handleRegister = async (credentials: User) => {
   await store.dispatch("auth/handleRegister", {
-    userName: credentials.name,
-    userEmail: credentials.email,
-    userPassword: credentials.password,
+    userName: credentials.userName,
+    userEmail: credentials.userEmail,
+    userPassword: credentials.userPassword,
   });
 
   handlePageNavigation({ name: "Home" });

@@ -1,5 +1,6 @@
 // TODO: REMOVER AS REQUESTS DAQUI E FAZER NO COMPONENT ACHO MELHOR USAR A STORE APENAS PARA GERENCIAMENTO DE ESTADO GLOBAL E NO COMPONENT FICA MELHOR DE LIDAR COM AS REQUESTS
 import * as user from "@/service/user";
+import { UserLoginCredentials, User } from "@/types/UserType";
 
 interface AuthState {
   token: string;
@@ -23,10 +24,7 @@ const mutations = {
 };
 
 const actions = {
-  async handleLogin(
-    { commit }: { commit: any },
-    { userEmail, userPassword }: { userEmail: string; userPassword: string }
-  ) {
+  async handleLogin({ commit }: { commit: any }, { userEmail, userPassword }: UserLoginCredentials) {
     const response = await user.userLogin({ userEmail, userPassword });
 
     if (response) {
@@ -36,12 +34,7 @@ const actions = {
     return response;
   },
 
-  async handleRegister(
-    { commit }: { commit: any },
-    { userName, userEmail, userPassword }: { userName: string; userEmail: string; userPassword: string }
-  ) {
-    console.log(userName, userEmail, userPassword);
-
+  async handleRegister({ commit }: { commit: any }, { userName, userEmail, userPassword }: User) {
     const response = await user.userRegister({ userName, userEmail, userPassword });
 
     if (response) {

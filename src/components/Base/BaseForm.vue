@@ -25,9 +25,7 @@ const props = defineProps<{
 
 const { handleSubmit, isSubmitting } = useForm();
 
-const onSubmit = handleSubmit(async (formValues) => {
-  await props.submit(formValues);
-});
+const onSubmit = handleSubmit((formValues) => props.submit(formValues));
 </script>
 
 <style lang="scss">
