@@ -10,7 +10,7 @@ export const FormDefaultFields = {
     label: { text: "Senha" },
     name: "password",
     placeholder: "Insira sua senha",
-    type: "text",
+    type: "password",
     maxlength: 50,
     rules: "required|min:8|max:50",
   },
@@ -29,11 +29,4 @@ export const FormDefaultFields = {
     type: "text",
     rules: "required|alpha_spaces|fullname",
   },
-  // LGPD: {
-  //   label: { text: "Concordo com os termos de uso." },
-  //   name: "lgpd",
-  //   type: "checkbox",
-  //   checked: true,
-  //   rules: "required",
-  // },
 };

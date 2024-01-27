@@ -28,6 +28,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  cursor: pointer;
 
   .loading {
     width: 20px;
