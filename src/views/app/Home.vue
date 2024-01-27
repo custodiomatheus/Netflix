@@ -1,5 +1,8 @@
 <template>
-  HOME
+  <div class="container container__app">
+    <HomeBanner />
+  </div>
+  <!-- <BannerHome /> -->
   <!-- <div v-if="featureShow.id">
     <section>
       <FeatureMovie :showId="featureShow.id" />
@@ -18,6 +21,7 @@
 </template>
 
 <script setup lang="ts">
+import HomeBanner from "@/components/Home/HomeBanner.vue";
 // import { Options, Vue } from "vue-class-component";
 // import { mapGetters, mapActions } from "vuex";
 
@@ -107,6 +111,9 @@
 </script>
 
 <style lang="scss" scoped>
+.container {
+  // background-color: darkblue;
+}
 .lists {
   margin-top: -75px;
 }

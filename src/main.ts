@@ -3,7 +3,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import store from "./store";
 import router from "./router";
-import "@/libs/veeValidate";
+import "@/libs/vee-validate";
 
 const app = createApp(App);
 
