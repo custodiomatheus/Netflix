@@ -1,11 +1,11 @@
 <template>
-  <BaseHeader />
+  <HeaderAuth />
   <RouterView />
 </template>
 
 <script setup lang="ts">
 import { RouterView } from "vue-router";
-import BaseHeader from "@/components/Base/BaseHeader.vue";
+import HeaderAuth from "@/components/Header/HeaderAuth.vue";
 </script>
 
 <style lang="scss">
