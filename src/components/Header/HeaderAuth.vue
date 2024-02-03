@@ -1,11 +1,11 @@
 <template>
   <header>
-    <img :src="`${TMDB_URL}w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png`" alt="Logo" height="50" />
+    <img :src="`${TMDB_IMAGE_URL}w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png`" alt="Logo" height="50" />
   </header>
 </template>
 
 <script setup lang="ts">
-import { TMDB_URL } from "@/helpers/constants/urls";
+import { TMDB_IMAGE_URL } from "@/helpers/constants/urls";
 </script>
 
 <style lang="scss" scoped>
