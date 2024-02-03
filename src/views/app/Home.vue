@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from "vue";
 import HomeBanner from "@/components/Home/HomeBanner.vue";
-import { getMoviePopular, getTvPopular } from "@/service/tmdb";
+import { getMoviePopular, getTvPopular } from "@/service/Tmdb";
 
 import { Tv, Movie, Trending } from "@/types/TmdbType";
 
