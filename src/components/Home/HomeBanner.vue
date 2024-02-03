@@ -1,7 +1,7 @@
 <template>
   <section class="banner">
     <swiper
-      :loop="false"
+      :loop="true"
       effect="fade"
       :modules="modules"
       :slides-per-view="1"
@@ -9,14 +9,14 @@
       :pagination="{ clickable: true, enabled: false }"
     >
       <swiper-slide
-        v-for="bannerTrending in bannerTrendings"
-        :key="bannerTrending.id"
-        :style="[{ 'background-image': `url(${TMDB_URL}w1280/${bannerTrending.backdrop_path})` }]"
+        v-for="trending in trendings"
+        :key="trending.id"
+        :style="[{ 'background-image': `url(${TMDB_IMAGE_URL}w1280/${trending.backdrop_path})` }]"
       >
         <div class="banner__shadow"></div>
         <div class="banner__infos">
-          <h1>{{ bannerTrending.title }}</h1>
-          <p>{{ bannerTrending.overview }}</p>
+          <h1>{{ trending?.title || trending?.name }}</h1>
+          <p>{{ trending.overview }}</p>
         </div>
       </swiper-slide>
     </swiper>
@@ -26,30 +26,20 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { TMDB_URL } from "@/helpers/constants/urls";
-import { limitString } from "@/helpers/handleStrigs";
 import { Pagination, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
-import { trendingAll } from "@/helpers/constants/mocks";
+import { Trending } from "@/types/TmdbType";
+// import { limitString } from "@/helpers/handleStrigs";
+import { TMDB_IMAGE_URL } from "@/helpers/constants/urls";
+
+defineProps<{
+  trendings: Trending[];
+}>();
 
 const modules = ref([Pagination, Autoplay, EffectFade]);
-
-const bannerTrendings = computed(() => {
-  return trendingAll.results
-    .filter((result) => result.id && result.backdrop_path && result?.title && result.overview)
-    .slice(0, 3)
-    .map(({ id, backdrop_path, title, overview }) => {
-      return {
-        id,
-        backdrop_path,
-        title,
-        overview: limitString(overview, 200),
-      };
-    });
-});
 </script>
 
 <style lang="scss" scoped>
