@@ -1,168 +1,41 @@
 import axios from "axios";
+import { MovieReponse, TvReponse } from "@/types/api/TmdbType";
+import { TMDB_API_URL } from "@/helpers/constants/urls";
 
-const find = async (uri: string) => {
-  const response = await axios.get(`https://api.themoviedb.org/3/${uri}`);
-  return response.data.results;
+const instance = axios.create({
+  baseURL: TMDB_API_URL,
+  params: { api_key: process.env.VUE_APP_ROOT_API_KEY },
+});
+
+export const getMoviePopular = async (): Promise<MovieReponse> => {
+  const response = await instance.get("movie/popular");
+
+  return response.data;
 };
 
-interface SeriesGenres {
-  title: string;
-  genres: string;
-  type: string;
-  items: any;
-}
+export const getTvPopular = async (): Promise<TvReponse> => {
+  const response = await instance.get("tv/popular");
 
-export default {
-  getHomeList: async (): Promise<SeriesGenres[]> => {
-    return [
-      {
-        title: "Em Alta",
-        genres: "top_rated",
-        type: "movie",
-        items: await find(
-          `movie/top_rated?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
-        ),
-      },
-
-      {
-        title: "Originais netflix",
-        genres: "originals",
-        type: "tv",
-        items: await find(
-          `discover/tv?api_key=${process.env.VUE_APP_ROOT_API_KEY}&with_network=213&language=pt-BR`
-        ),
-      },
-
-      {
-        title: "Recomendados",
-        genres: "trending",
-        type: "tv",
-        items: await find(
-          `trending/tv/week?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
-        ),
-      },
-
-      {
-        title: "Ficção",
-        genres: "fiction",
-        type: "movie",
-        items: await find(
-          `discover/movie?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=10765&language=pt-BR`
-        ),
-      },
-
-      {
-        title: "Ação",
-        genres: "action",
-        type: "tv",
-        items: await find(
-          `discover/tv?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=10759&language=pt-BR`
-        ),
-      },
-    ];
-  },
-  getMoviesList: async (): Promise<SeriesGenres[]> => {
-    return [
-      {
-        title: "Em Alta",
-        genres: "top_rated",
-        type: "movie",
-        items: await find(
-          `movie/top_rated?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
-        ),
-      },
-      {
-        title: "Originais netflix",
-        genres: "originals",
-        type: "movie",
-        items: await find(
-          `discover/movie?api_key=${process.env.VUE_APP_ROOT_API_KEY}&with_network=213&language=pt-BR`
-        ),
-      },
-      {
-        title: "Ação",
-        genres: "action",
-        type: "movie",
-        items: await find(
-          `discover/movie?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=28&language=pt-BR`
-        ),
-      },
-      {
-        title: "Comédia",
-        genres: "comedy",
-        type: "movie",
-        items: await find(
-          `discover/movie?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=35&language=pt-BR`
-        ),
-      },
-      {
-        title: "Terror",
-        genres: "horror",
-        type: "movie",
-        items: await find(
-          `discover/movie?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=27&language=pt-BR`
-        ),
-      },
-      {
-        title: "Documentário",
-        genres: "documentary",
-        type: "movie",
-        items: await find(
-          `discover/movie?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=99&language=pt-BR`
-        ),
-      },
-    ];
-  },
-  getSeriesList: async (): Promise<SeriesGenres[]> => {
-    return [
-      {
-        title: "Em Alta",
-        genres: "top_rated",
-        type: "tv",
-        items: await find(
-          `tv/top_rated?api_key=${process.env.VUE_APP_ROOT_API_KEY}&language=pt-BR`
-        ),
-      },
-      {
-        title: "Originais netflix",
-        genres: "originals",
-        type: "tv",
-        items: await find(
-          `discover/tv?api_key=${process.env.VUE_APP_ROOT_API_KEY}&with_network=213&language=pt-BR`
-        ),
-      },
-      {
-        title: "Ação",
-        genres: "action",
-        type: "tv",
-        items: await find(
-          `discover/tv?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=28&language=pt-BR`
-        ),
-      },
-      {
-        title: "Comédia",
-        genres: "comedy",
-        type: "tv",
-        items: await find(
-          `discover/tv?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=35&language=pt-BR`
-        ),
-      },
-      {
-        title: "Terror",
-        genres: "horror",
-        type: "tv",
-        items: await find(
-          `discover/tv?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=27&language=pt-BR`
-        ),
-      },
-      {
-        title: "Documentário",
-        genres: "documentary",
-        type: "tv",
-        items: await find(
-          `discover/tv?api_key=${process.env.VUE_APP_ROOT_API_KEY}&without_genres=99&language=pt-BR`
-        ),
-      },
-    ];
-  },
+  return response.data;
 };
+
+// export const getMovieUpcoming = async (): Promise<TmdbResponse> => {
+//   const response = await instance.get("movie/upcoming");
+
+//   return response.data;
+// };
+
+// export const getMovieTopRated = async (): Promise<TmdbResponse> => {
+//   const response = await instance.get("movie/top_rated");
+
+//   return response.data;
+// };
+
+// export const getMovieNowPlaying = async (): Promise<TmdbResponse> => {
+//   const response = await instance.get("movie/now_playing");
+
+//   return response.data;
+// };
+
+// tmdb/movie/609681?append_to_response=videos,credits,images,external_ids,release_dates,combined_credits&include_image_language=en&language
+// tmdb/tv/1396?append_to_response=videos,credits,images,external_ids,release_dates,combined_credits&include_image_language=en&language=pt-BR
