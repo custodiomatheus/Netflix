@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="container__form">
+  <div class="container container__authentication">
+    <div class="container__authentication-form">
       <BaseForm title="Entrar" button-text="Entre" :schema="schema" :submit="handleLogin" />
 
       <span> Não possui conta? <router-link :to="{ name: 'Register' }">Assine agora.</router-link> </span>

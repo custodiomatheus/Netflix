@@ -8,13 +8,7 @@ import { RouterView } from "vue-router";
 
 <style lang="scss">
 .container {
-  height: 100vh;
   width: 100%;
-  padding-top: $header-height-size;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
 }
 // ul {
 //   list-style: none;
