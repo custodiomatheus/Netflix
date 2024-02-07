@@ -1,9 +1,9 @@
 <template>
   <div class="container container__app">
-    <HomeBanner :trendings="bannerTrending" />
+    <BannerPrimary :trendings="bannerTrending" />
 
     <div class="home__list">
-      <HomeSlider
+      <SliderPrimary
         v-for="moviesItem in moviesList"
         :key="moviesItem.title"
         :title="moviesItem.title"
@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from "vue";
 import { Movie, Trending } from "@/types/TmdbType";
-import HomeBanner from "@/components/Home/HomeBanner";
-import HomeSlider from "@/components/Home/HomeSlider";
+import SliderPrimary from "@/components/Slider/SliderPrimary";
+import BannerPrimary from "@/components/Banner/BannerPrimary";
 import { getMoviePopular, getMovieUpcoming, getMovieTopRated, getMovieNowPlaying } from "@/service/Tmdb";
 
 const MOVIES_LIST = [
