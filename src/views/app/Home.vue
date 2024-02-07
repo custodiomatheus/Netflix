@@ -17,13 +17,20 @@
 
   <div class="container container__app">
     <HomeBanner :trendings="bannerTrending" />
+
+    <div class="home__list">
+      <HomeSlider v-if="popularMovies.length" title="Filmes Populares" :items="popularMovies" />
+
+      <HomeSlider v-if="popularTvs.length" title="Séries Populares" :items="popularTvs" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onBeforeMount } from "vue";
-import HomeBanner from "@/components/Home/HomeBanner.vue";
-import { getMoviePopular, getTvPopular } from "@/service/tmdb";
+import HomeBanner from "@/components/Home/HomeBanner";
+import HomeSlider from "@/components/Home/HomeSlider";
+import { getMoviePopular, getTvPopular } from "@/service/Tmdb";
 
 import { Tv, Movie, Trending } from "@/types/TmdbType";
 
@@ -44,8 +51,17 @@ onBeforeMount(async () => {
   getaBannerTrending([movies.results[0], tvs.results[0]]);
 
   popularMovies.value = movies.results;
+
   popularTvs.value = tvs.results;
 
   isLoading.value = false;
 });
 </script>
+
+<style lang="scss" scoped>
+.home__list {
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+</style>

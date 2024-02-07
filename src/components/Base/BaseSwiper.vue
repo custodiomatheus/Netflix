@@ -1,72 +1,60 @@
 <template>
-  <section class="banner">
-    <swiper
-      loop
-      effect="fade"
-      :modules="modules"
-      :slides-per-view="1"
-      :autoplay="{ delay: 12000 }"
-      :pagination="{ clickable: true }"
-    >
-      <!-- <swiper-slide>
-        <div class="banner__shadow"></div>
-        <div class="banner__infos">
-          <h1>{{ bannerTrending.title }}</h1>
-          <p>{{ bannerTrending.overview }}</p>
-        </div>
-      </swiper-slide> -->
-    </swiper>
-  </section>
+  <swiper
+    :loop="loop"
+    :effect="effect"
+    :modules="modules"
+    :autoplay="autoPlay"
+    :pagination="pagination"
+    :navigation="navigation"
+    :space-between="spaceBetween"
+    :slides-per-view="slidesPerView"
+  >
+    <slot name="swiper-slide"></slot>
+  </swiper>
 </template>
 
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
 import "swiper/css/effect-fade";
-
-const modules = [Pagination, Autoplay, EffectFade];
+import { Swiper } from "swiper/vue";
+import { Pagination, Autoplay, EffectFade, Navigation } from "swiper/modules";
 
 interface Props {
   loop?: boolean;
   effect?: string;
+  spaceBetween?: number;
   slidesPerView?: number;
-  autoPlay: {
+  autoPlay?: {
+    enabled?: boolean;
     delay: number;
   };
-  pagination: {
+  pagination?: {
     enabled?: boolean;
     clickable?: boolean;
   };
+  navigation?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   loop: true,
   effect: "",
   slidesPerView: 1,
-  // autoPlay: () => {
-  //   return {
-  //     delay: 12000,
-  //   };
-  // },
-  pagination: () => {
+  autoPlay: () => {
     return {
       enabled: true,
+      delay: 12000,
+    };
+  },
+  pagination: () => {
+    return {
+      enabled: false,
       clickable: true,
     };
   },
+  navigation: false,
 });
+
+const modules = [Pagination, Autoplay, EffectFade, Navigation];
 </script>
-
-<style lang="scss" scoped>
-.swiper {
-  width: 100%;
-  height: 100%;
-
-  .swiper-slide {
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-}
-</style>
