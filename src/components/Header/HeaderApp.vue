@@ -1,9 +1,11 @@
 <template>
   <header :class="{ 'background-solid': scrollPosition }">
-    <img :src="`${TMDB_IMAGE_URL}w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png`" alt="Logo" height="32" />
+    <router-link to="/">
+      <img :src="`${TMDB_IMAGE_URL}w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png`" alt="Logo" height="32" />
+    </router-link>
 
     <ul>
-      <li v-for="item in NAVIGATION_LIST" :key="item.route">
+      <li v-for="item in HEADER_APP_LIST" :key="item.route">
         <router-link :to="item.route">{{ item.title }}</router-link>
       </li>
     </ul>
@@ -13,7 +15,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { TMDB_IMAGE_URL } from "@/helpers/constants/urls";
-import { NAVIGATION_LIST } from "@/helpers/constants/header";
+import { HEADER_APP_LIST } from "@/helpers/constants/header";
 
 const scrollPosition = ref<boolean>(false);
 

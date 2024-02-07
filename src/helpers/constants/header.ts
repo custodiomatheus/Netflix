@@ -1,4 +1,4 @@
-export const NAVIGATION_LIST = [
+export const HEADER_APP_LIST = [
   {
     title: "Filmes",
     route: "/movies",
