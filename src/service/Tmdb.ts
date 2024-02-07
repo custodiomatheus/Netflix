@@ -37,5 +37,17 @@ export const getTvPopular = async (): Promise<TvReponse> => {
   return response.data;
 };
 
+export const getTvTopRated = async (): Promise<TvReponse> => {
+  const response = await instance.get("tv/top_rated");
+
+  return response.data;
+};
+
+export const getTvAiringToday = async (): Promise<TvReponse> => {
+  const response = await instance.get("tv/airing_today");
+
+  return response.data;
+};
+
 // tmdb/movie/609681?append_to_response=videos,credits,images,external_ids,release_dates,combined_credits&include_image_language=en&language
 // tmdb/tv/1396?append_to_response=videos,credits,images,external_ids,release_dates,combined_credits&include_image_language=en&language=pt-BR

@@ -25,6 +25,11 @@ export default [
         name: "Movies",
         component: () => import("@/views/app/Movies.vue"),
       },
+      {
+        path: "/tvs",
+        name: "Tvs",
+        component: () => import("@/views/app/Tvs.vue"),
+      },
     ],
   },
 ];

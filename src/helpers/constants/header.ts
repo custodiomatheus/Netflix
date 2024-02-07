@@ -5,6 +5,6 @@ export const NAVIGATION_LIST = [
   },
   {
     title: "Séries",
-    route: "/",
+    route: "/tvs",
   },
 ];

@@ -1,10 +1,5 @@
 <template>
-  <!-- 
-
-    TODO: PARA A PÁGINA SE SÉRIES
-      -> tv/top_rated
-      -> tv/popular
-      -> tv/airing_today
+  <!--
 
     TODO: PÁGINA DE PESQUISA
       -> search/multi?query=Marvel+e+&page=1
