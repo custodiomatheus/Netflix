@@ -1,35 +1,25 @@
 <template>
-  <!-- 
-    TODO: PARA A PÁGINA DE FILMES
-      -> movie/upcoming
-      -> movie/top_rated
-      -> movie/popular
-      -> movie/now_playing
-
-    TODO: PARA A PÁGINA SE SÉRIES
-      -> tv/top_rated
-      -> tv/popular
-      -> tv/airing_today
+  <!--
 
     TODO: PÁGINA DE PESQUISA
       -> search/multi?query=Marvel+e+&page=1
     -->
 
   <div class="container container__app">
-    <HomeBanner :trendings="bannerTrending" />
+    <BannerPrimary :trendings="bannerTrending" />
 
     <div class="home__list">
-      <HomeSlider v-if="popularMovies.length" title="Filmes Populares" :items="popularMovies" />
+      <SliderPrimary v-if="popularMovies.length" title="Filmes Populares" :items="popularMovies" />
 
-      <HomeSlider v-if="popularTvs.length" title="Séries Populares" :items="popularTvs" />
+      <SliderPrimary v-if="popularTvs.length" title="Séries Populares" :items="popularTvs" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onBeforeMount } from "vue";
-import HomeBanner from "@/components/Home/HomeBanner";
-import HomeSlider from "@/components/Home/HomeSlider";
+import SliderPrimary from "@/components/Slider/SliderPrimary";
+import BannerPrimary from "@/components/Banner/BannerPrimary";
 import { getMoviePopular, getTvPopular } from "@/service/Tmdb";
 
 import { Tv, Movie, Trending } from "@/types/TmdbType";
