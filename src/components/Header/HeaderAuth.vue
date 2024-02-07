@@ -15,7 +15,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 $padding-vertical-desktop;
+  padding: 0 $padding-horizontal-desktop;
   position: fixed;
   top: 0;
   z-index: 1;

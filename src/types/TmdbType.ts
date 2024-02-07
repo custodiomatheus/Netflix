@@ -3,12 +3,16 @@ export class Movie {
   title?: string;
   backdrop_path: string;
   overview: string;
+  vote_average: number;
+  poster_path: string;
 
   private constructor(movie: Movie) {
     this.id = movie.id;
     this.title = movie.title;
     this.backdrop_path = movie.backdrop_path;
     this.overview = movie.overview;
+    this.vote_average = movie.vote_average;
+    this.poster_path = movie.poster_path;
   }
 
   public static create(movie: Movie): Movie {
@@ -39,12 +43,16 @@ export class Tv {
   name?: string;
   backdrop_path: string;
   overview: string;
+  vote_average: number;
+  poster_path: string;
 
   private constructor(tv: Tv) {
     this.id = tv.id;
     this.name = tv.name;
     this.backdrop_path = tv.backdrop_path;
     this.overview = tv.overview;
+    this.vote_average = tv.vote_average;
+    this.poster_path = tv.poster_path;
   }
 
   public static create(tv: Tv): Tv {

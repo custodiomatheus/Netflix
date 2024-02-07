@@ -4,7 +4,7 @@ import { TMDB_API_URL } from "@/helpers/constants/urls";
 
 const instance = axios.create({
   baseURL: TMDB_API_URL,
-  params: { api_key: process.env.VUE_APP_ROOT_API_KEY },
+  params: { api_key: process.env.VUE_APP_ROOT_API_KEY, language: "pt-BR" },
 });
 
 export const getMoviePopular = async (): Promise<MovieReponse> => {

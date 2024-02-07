@@ -1,66 +1,60 @@
 <template>
-  <section class="banner">
-    <swiper
-      :loop="loop"
-      :effect="effect"
-      :modules="modules"
-      :slides-per-view="slidesPerView"
-      :autoplay="autoPlay"
-      :pagination="pagination"
-    >
-      <slot name="swiper-slide"></slot>
-    </swiper>
-  </section>
+  <swiper
+    :loop="loop"
+    :effect="effect"
+    :modules="modules"
+    :autoplay="autoPlay"
+    :pagination="pagination"
+    :navigation="navigation"
+    :space-between="spaceBetween"
+    :slides-per-view="slidesPerView"
+  >
+    <slot name="swiper-slide"></slot>
+  </swiper>
 </template>
 
 <script setup lang="ts">
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 import { Swiper } from "swiper/vue";
-import { Pagination, Autoplay, EffectFade } from "swiper/modules";
+import { Pagination, Autoplay, EffectFade, Navigation } from "swiper/modules";
 
 interface Props {
   loop?: boolean;
   effect?: string;
+  spaceBetween?: number;
   slidesPerView?: number;
-  autoPlay: {
+  autoPlay?: {
+    enabled?: boolean;
     delay: number;
   };
-  pagination: {
+  pagination?: {
     enabled?: boolean;
     clickable?: boolean;
   };
+  navigation?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   loop: true,
   effect: "",
   slidesPerView: 1,
   autoPlay: () => {
     return {
+      enabled: true,
       delay: 12000,
     };
   },
   pagination: () => {
     return {
-      enabled: true,
+      enabled: false,
       clickable: true,
     };
   },
+  navigation: false,
 });
 
-const modules = [Pagination, Autoplay, EffectFade];
+const modules = [Pagination, Autoplay, EffectFade, Navigation];
 </script>
-
-<style lang="scss" scoped>
-.swiper {
-  width: 100%;
-  height: 100%;
-
-  .swiper-slide {
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-}
-</style>
