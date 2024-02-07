@@ -1,6 +1,4 @@
-1 -> finalizar component BaseSwiper
-
-2 -> acessar endpoints e rendereizar conteúdos da home
+2 -> adicionar background no header quando tiver scroll
 
 3 -> montar tela de movies
 
