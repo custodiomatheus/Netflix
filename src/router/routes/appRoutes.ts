@@ -30,6 +30,11 @@ export default [
         name: "Tvs",
         component: () => import("@/views/app/Tvs.vue"),
       },
+      {
+        path: "/search",
+        name: "Search",
+        component: () => import("@/views/app/Search.vue"),
+      },
     ],
   },
 ];

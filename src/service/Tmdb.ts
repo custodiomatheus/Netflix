@@ -1,6 +1,7 @@
 import axios from "axios";
-import { MovieReponse, TvReponse } from "@/types/api/TmdbType";
 import { TMDB_API_URL } from "@/helpers/constants/urls";
+import { MovieReponse, TvReponse } from "@/types/api/TmdbType";
+import { LocationQueryValue } from "vue-router";
 
 const instance = axios.create({
   baseURL: TMDB_API_URL,
@@ -45,6 +46,15 @@ export const getTvTopRated = async (): Promise<TvReponse> => {
 
 export const getTvAiringToday = async (): Promise<TvReponse> => {
   const response = await instance.get("tv/airing_today");
+
+  return response.data;
+};
+
+export const getSearchMulti = async (
+  query: LocationQueryValue | LocationQueryValue[]
+): Promise<TvReponse | MovieReponse> => {
+  // TODO: ADICIONAR PAGINACAO
+  const response = await instance.get(`search/multi?query=${query}+e+&page=1`);
 
   return response.data;
 };
