@@ -1,8 +1,8 @@
 <template>
-  <div class="container container__app">
+  <section class="app">
     <BannerPrimary :trendings="bannerTrending" />
 
-    <div class="home__list">
+    <div class="app__padding app__list">
       <SliderPrimary
         v-for="moviesItem in moviesList"
         :key="moviesItem.title"
@@ -10,7 +10,7 @@
         :items="moviesItem.items"
       />
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -39,8 +39,6 @@ const MOVIES_LIST = [
   },
 ];
 
-const isLoading = ref<boolean>(false);
-
 const bannerTrending = ref<Trending[]>([]);
 
 const moviesList = ref<{ title: string; items: Movie[] }[]>([]);
@@ -50,8 +48,6 @@ const getBannerTrending = (results: Movie[] = []): void => {
 };
 
 onBeforeMount(async () => {
-  isLoading.value = true;
-
   const moviesRequests = MOVIES_LIST.map(async (movieItem) => {
     return {
       title: movieItem.title,
@@ -62,15 +58,5 @@ onBeforeMount(async () => {
   moviesList.value = await Promise.all(moviesRequests);
 
   getBannerTrending([moviesList.value[0].items[0]]);
-
-  isLoading.value = false;
 });
 </script>
-
-<style lang="scss" scoped>
-.home__list {
-  display: flex;
-  flex-direction: column;
-  gap: 96px;
-}
-</style>

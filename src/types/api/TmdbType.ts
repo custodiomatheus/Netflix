@@ -2,9 +2,13 @@ import { Tv, Movie } from "@/types/TmdbType";
 
 class TmdbResponse {
   page: number;
+  total_results: number;
+  results: Movie[] | Tv[];
 
   constructor(tmdbResponse: TmdbResponse) {
     this.page = tmdbResponse.page;
+    this.total_results = tmdbResponse.total_results;
+    this.results = tmdbResponse.results;
   }
 
   public static create(tmdbResponse: TmdbResponse): TmdbResponse {

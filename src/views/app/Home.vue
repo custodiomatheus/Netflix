@@ -1,19 +1,13 @@
 <template>
-  <!--
-
-    TODO: PÁGINA DE PESQUISA
-      -> search/multi?query=Marvel+e+&page=1
-    -->
-
-  <div class="container container__app">
+  <section class="app">
     <BannerPrimary :trendings="bannerTrending" />
 
-    <div class="home__list">
+    <div class="app__padding app__list">
       <SliderPrimary v-if="popularMovies.length" title="Filmes Populares" :items="popularMovies" />
 
       <SliderPrimary v-if="popularTvs.length" title="Séries Populares" :items="popularTvs" />
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">

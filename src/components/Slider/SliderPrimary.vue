@@ -27,7 +27,6 @@ defineProps<{
 
 <style lang="scss" scoped>
 .slider {
-  padding: 0 $padding-horizontal-desktop;
   position: relative;
 
   img {
