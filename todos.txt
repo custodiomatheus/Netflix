@@ -1,5 +1,3 @@
-4 -> adicionar cache nos banners
-
 5 -> montar tela de pesquisa
 
 6 -> montar tela de detalhes
