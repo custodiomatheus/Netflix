@@ -1,7 +1,9 @@
-5 -> montar tela de pesquisa
+5 -> renderizar cards
 
 6 -> montar tela de detalhes
 
-7 - montar footer
-
 8 - separar tmdb requests
+
+9 - melhorar a estrutura das páginas, algumas coisas se repetem mto
+
+10 - melhorar a forma do search
