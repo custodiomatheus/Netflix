@@ -17,34 +17,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
+import { useStore } from "vuex";
+import { Tv, Movie, Trending } from "@/types/TmdbType";
 import SliderPrimary from "@/components/Slider/SliderPrimary";
 import BannerPrimary from "@/components/Banner/BannerPrimary";
 import { getMoviePopular, getTvPopular } from "@/service/Tmdb";
 
-import { Tv, Movie, Trending } from "@/types/TmdbType";
+const store = useStore();
 
-const isLoading = ref<boolean>(false);
-
-const popularMovies = ref<Movie[]>([]);
 const popularTvs = ref<Tv[]>([]);
-const bannerTrending = ref<Trending[]>([]);
+const popularMovies = ref<Movie[]>([]);
 
-const getaBannerTrending = (results: Tv[] | Movie[] = []): void => {
-  bannerTrending.value = results.map((result) => Trending.create(result));
+const bannerTrending = computed(() => store.getters["content/getTrendings"]);
+
+const trendingTransform = (results: Tv[] | Movie[] = []): Trending[] => {
+  return results.map((result) => Trending.create(result));
 };
 
 onBeforeMount(async () => {
-  isLoading.value = true;
   const [movies, tvs] = await Promise.all([getMoviePopular(), getTvPopular()]);
 
-  getaBannerTrending([movies.results[0], tvs.results[0]]);
-
   popularMovies.value = movies.results;
-
   popularTvs.value = tvs.results;
 
-  isLoading.value = false;
+  store.commit("content/SET_TRENDINGS", { trendings: trendingTransform([movies.results[0], tvs.results[0]]) });
 });
 </script>
 
