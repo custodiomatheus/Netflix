@@ -4,9 +4,6 @@ import { UserLoginCredentials, User } from "@/types/UserType";
 
 interface AuthState {
   token: string;
-  // id: number | undefined;
-  // token: string | undefined;
-  // flat: Flat | undefined;
 }
 
 const state: AuthState = {
