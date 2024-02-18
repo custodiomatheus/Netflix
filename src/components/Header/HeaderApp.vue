@@ -1,12 +1,12 @@
 <template>
   <header :class="{ 'background-solid': scrollPosition }">
     <nav>
-      <router-link to="/">
+      <router-link @click="handleClose" to="/">
         <img :src="`${TMDB_IMAGE_URL}w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png`" alt="Logo" height="32" />
       </router-link>
 
       <ul>
-        <li v-for="item in HEADER_APP_LIST" :key="item.route">
+        <li v-for="item in HEADER_APP_LIST" :key="item.route" @click="handleClose">
           <router-link :to="item.route">{{ item.title }}</router-link>
         </li>
       </ul>
@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, computed, watch } from "vue";
+import { ref, nextTick, computed } from "vue";
 import { LocationQueryValue } from "vue-router";
 import useNavigate from "@/composables/useNavigate";
 import { TMDB_IMAGE_URL } from "@/helpers/constants/urls";
@@ -43,18 +43,6 @@ const searchFieldValue = ref<LocationQueryValue | LocationQueryValue[] | string>
 
 const searchFieldActive = ref<boolean>(!!searchFieldValue.value || false);
 
-const handleScrollPosition = (): void => {
-  scrollPosition.value = window.scrollY > 40;
-};
-
-const handleSearch = (status: boolean) => {
-  searchFieldActive.value = status;
-
-  nextTick(() => {
-    searchField.value.focus();
-  });
-};
-
 const handleSearchFieldBlur = () => {
   if (!searchFieldValue.value) {
     handleSearch(false);
@@ -65,15 +53,22 @@ const handleSearchFieldValue = (value: string) => {
   handlePageNavigation({ name: "Search", queryParams: { s: value } });
 };
 
-watch(
-  () => valueSearch.value,
-  () => {
-    if (!valueSearch.value) {
-      searchFieldValue.value = "";
-      handleSearch(false);
-    }
-  }
-);
+const handleSearch = (status: boolean) => {
+  searchFieldActive.value = status;
+
+  nextTick(() => {
+    searchField.value.focus();
+  });
+};
+
+const handleClose = () => {
+  searchFieldValue.value = "";
+  handleSearch(false);
+};
+
+const handleScrollPosition = (): void => {
+  scrollPosition.value = window.scrollY > 40;
+};
 
 window.addEventListener("scroll", handleScrollPosition);
 </script>

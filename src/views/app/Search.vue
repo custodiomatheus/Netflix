@@ -1,36 +1,75 @@
 <template>
   <section class="app app__padding">
     <h1>Resultados da procura por: {{ valueSearch }}</h1>
-    <span v-show="!isLoading">{{ searchTotalResults }} itens</span>
+    <span>{{ searchTotalResults }} itens</span>
+
+    <ul>
+      <li v-for="item in searchResults" :key="item.id">
+        <CardPrimary
+          :overview="item.overview"
+          :title="item?.title || item?.name"
+          :poster_path="`${TMDB_IMAGE_URL}w400/${item.poster_path}`"
+        />
+      </li>
+    </ul>
+
+    <BaseIntersectionObserver
+      v-if="searchTotalPages > 1"
+      entries-property="isIntersecting"
+      @is-in-screen="loadContent"
+    />
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onBeforeUnmount } from "vue";
+import { useStore } from "vuex";
 import { debounce } from "underscore";
-import { Tv, Movie } from "@/types/TmdbType";
 import { LocationQueryValue } from "vue-router";
 import { getSearchMulti } from "@/service/Tmdb";
 import useNavigate from "@/composables/useNavigate";
+import CardPrimary from "@/components/Card/CardPrimary";
+import { TMDB_IMAGE_URL } from "@/helpers/constants/urls";
+import BaseIntersectionObserver from "@/components/Base/BaseIntersectionObserver";
 
+const store = useStore();
 const { getQueryParam, handlePageNavigation } = useNavigate();
 
-const isLoading = ref<boolean>(true);
-const searchTotalResults = ref(0);
-const searchResults = ref<Tv[] | Movie[]>([]);
+const currentPage = ref(1);
+const searchTotalPages = ref(0);
 
+const searchResults = computed(() => store.getters["content/getSearchResult"].results);
+const searchTotalResults = computed(() => store.getters["content/getSearchResult"].total_results);
 const valueSearch = computed<LocationQueryValue | LocationQueryValue[]>(() => getQueryParam("s"));
 
+const loadContent = async () => {
+  if (currentPage.value < searchTotalPages.value) {
+    currentPage.value += 1;
+
+    const response = await getSearchMulti({ query: valueSearch.value, page: currentPage.value });
+    store.commit("content/SET_SEARCH_RESULT_APPEND", {
+      results: response.results,
+    });
+  }
+};
+
 const getSearchValue = debounce(async () => {
-  isLoading.value = true;
+  currentPage.value = 1;
 
-  const response = await getSearchMulti(valueSearch.value);
+  const response = await getSearchMulti({ query: valueSearch.value, page: currentPage.value });
 
-  searchResults.value = response.results;
-  searchTotalResults.value = response.total_results;
+  searchTotalPages.value = response.total_pages;
 
-  isLoading.value = false;
+  store.commit("content/SET_SEARCH_RESULT", {
+    searchResult: { results: response.results, total_results: response.total_results },
+  });
 }, 2000);
+
+onBeforeUnmount(() => {
+  store.commit("content/SET_SEARCH_RESULT", {
+    searchResult: { results: [], total_results: 0 },
+  });
+});
 
 watch(
   () => valueSearch.value,
@@ -60,6 +99,15 @@ watch(
 
   span {
     color: $gray-700;
+  }
+
+  ul {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 32px;
+    background-color: darkblue;
+    // min-height: calc((450px + 32px) * 2);
   }
 }
 </style>

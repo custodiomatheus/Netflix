@@ -50,11 +50,16 @@ export const getTvAiringToday = async (): Promise<TvReponse> => {
   return response.data;
 };
 
-export const getSearchMulti = async (
-  query: LocationQueryValue | LocationQueryValue[]
-): Promise<TvReponse | MovieReponse> => {
-  // TODO: ADICIONAR PAGINACAO
-  const response = await instance.get(`search/multi?query=${query}+e+&page=1`);
+interface getSearchMultiProps {
+  query: LocationQueryValue | LocationQueryValue[];
+  page: number;
+}
+
+export const getSearchMulti = async ({ query, page }: getSearchMultiProps): Promise<TvReponse | MovieReponse> => {
+  const response = await instance.get(`search/multi?query=${query}+e+&page=${page}`);
+
+  console.log(response.data);
+  
 
   return response.data;
 };

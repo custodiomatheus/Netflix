@@ -5,8 +5,11 @@
     <BaseSwiper :space-between="32" :slides-per-view="4" :auto-play="{ enabled: false }" :navigation="true">
       <template #swiper-slide>
         <swiper-slide v-for="item in items" :key="item.id">
-          <img :src="`${TMDB_IMAGE_URL}w400/${item.poster_path}`" :alt="item.overview" loading="lazy" />
-          <h4>{{ item?.title || item?.name }}</h4>
+          <CardPrimary
+            :overview="item.overview"
+            :title="item?.title || item?.name"
+            :poster_path="`${TMDB_IMAGE_URL}w400/${item.poster_path}`"
+          />
         </swiper-slide>
       </template>
     </BaseSwiper>
@@ -17,6 +20,7 @@
 import { SwiperSlide } from "swiper/vue";
 import BaseSwiper from "@/components/Base/BaseSwiper";
 import { Tv, Movie, Trending } from "@/types/TmdbType";
+import CardPrimary from "@/components/Card/CardPrimary";
 import { TMDB_IMAGE_URL } from "@/helpers/constants/urls";
 
 defineProps<{
@@ -29,19 +33,8 @@ defineProps<{
 .slider {
   position: relative;
 
-  img {
-    width: 100%;
-    height: 450px;
-    border-radius: $border-radius;
-    margin-bottom: 16px;
-  }
-
-  h2,
-  h4 {
-    color: $white;
-  }
-
   h2 {
+    color: $white;
     margin-bottom: 32px;
   }
 }
