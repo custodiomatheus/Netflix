@@ -1,0 +1,35 @@
+* {
+  outline: none;
+  box-sizing: border-box;
+}
+
+body {
+  // background-color: var(--black); // TODO: REMOVE
+  // color: var(--white); // TODO: REMOVE
+  font-family: 'Roboto', sans-serif; // TODO: ADD ANOTHER
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px; /* you can chose any size here 16 is default */
+  // @media screen and (max-width: 991px) {
+  //   font-size: 62.5%;
+  // }
+  // @media screen and (max-width: 767px) {
+  //   font-size: 50%;
+  // }
+  // @media screen and (max-width: 600px) {
+  //   font-size: 45%;
+  // }
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}

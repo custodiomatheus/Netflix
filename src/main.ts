@@ -1,11 +1,13 @@
 import { createApp } from "vue";
+
 import App from "./App.vue";
-import router from "./router";
 import store from "./store";
-import dotenv from "dotenv";
+import router from "./router";
+import "@/libs/vee-validate";
 
-dotenv.config({
-  path: `../.env.${process.env.NODE_ENV}.local`,
-});
+const app = createApp(App);
 
-createApp(App).use(store).use(router).mount("#app");
+app.use(store);
+app.use(router);
+
+app.mount("#app");
