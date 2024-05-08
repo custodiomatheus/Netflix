@@ -1,9 +1,5 @@
-5 -> renderizar cards
-
-6 -> montar tela de detalhes
-
-8 - separar tmdb requests
-
-9 - melhorar a estrutura das páginas, algumas coisas se repetem mto
-
-10 - melhorar a forma do search
+- Responsividade
+- Detalhes (abrir modal ao clicar num card)
+- Separar tmdb requests
+- Melhorar a estrutura das páginas, algumas coisas se repetem mto
+- Melhorar a forma do search

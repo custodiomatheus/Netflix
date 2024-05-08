@@ -1,6 +1,9 @@
 <template>
   <HeaderApp />
-  <RouterView />
+
+  <main style="padding-bottom: 32px">
+    <RouterView />
+  </main>
 </template>
 
 <script setup lang="ts">

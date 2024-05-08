@@ -1,6 +1,6 @@
 <template>
   <header>
-    <img :src="`${TMDB_IMAGE_URL}w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png`" alt="Logo" height="50" />
+    <img :src="`${TMDB_IMAGE_URL}w300/wwemzKWzjKYJFfCeiB57q3r4Bcm.png`" alt="Logo" />
   </header>
 </template>
 
@@ -19,5 +19,9 @@ header {
   position: fixed;
   top: 0;
   z-index: 1;
+
+  img {
+    height: 50px;
+  }
 }
 </style>

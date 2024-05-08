@@ -2,6 +2,7 @@
   <swiper
     :loop="loop"
     :effect="effect"
+    :grabCursor="true"
     :modules="modules"
     :autoplay="autoPlay"
     :pagination="pagination"

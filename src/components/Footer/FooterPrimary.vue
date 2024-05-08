@@ -4,7 +4,9 @@
       <span>Vuetflix©2024</span>
       <span>
         Dados fornecidos pelo
-        <a href="https://www.themoviedb.org/" target="_blank">Themoviedb.org</a>
+        <strong>
+          <a href="https://www.themoviedb.org/" target="_blank">Themoviedb.org</a>
+        </strong>
       </span>
     </div>
 
@@ -21,7 +23,8 @@
   display: flex;
   justify-content: space-between;
   background-color: $black;
-  padding: 128px $padding-horizontal-desktop 96px;
+  padding: 96px $padding-horizontal-desktop;
+  border-top: 1px solid $gray-900;
 
   a:visited {
     color: inherit;
