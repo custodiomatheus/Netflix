@@ -38,7 +38,7 @@ interface Props {
   navigation?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   loop: true,
   effect: "",
   slidesPerView: 1,

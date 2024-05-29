@@ -1,5 +1,6 @@
 - Responsividade
-- Detalhes (abrir modal ao clicar num card)
 - Separar tmdb requests
 - Melhorar a estrutura das páginas, algumas coisas se repetem mto
 - Melhorar a forma do search
+- Mais informações no banner
+- Mais informações no modal do card
