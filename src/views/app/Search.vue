@@ -1,7 +1,7 @@
 <template>
   <section class="app app__padding">
     <h1>Resultados da procura por: {{ valueSearch }}</h1>
-    <span>{{ searchTotalResults }} itens</span>
+    <span v-if="showTotalResults">{{ searchTotalResults }} itens</span>
 
     <ul>
       <li v-for="item in searchResults" :key="item.id">
@@ -28,15 +28,16 @@ import { debounce } from "underscore";
 import { LocationQueryValue } from "vue-router";
 import { getSearchMulti } from "@/service/Tmdb";
 import useNavigate from "@/composables/useNavigate";
-import CardPrimary from "@/components/Card/CardPrimary";
+import CardPrimary from "@/components/Card/CardPrimary.vue";
 import { TMDB_IMAGE_URL } from "@/helpers/constants/urls";
-import BaseIntersectionObserver from "@/components/Base/BaseIntersectionObserver";
+import BaseIntersectionObserver from "@/components/Base/BaseIntersectionObserver.vue";
 
 const store = useStore();
 const { getQueryParam, handlePageNavigation } = useNavigate();
 
 const currentPage = ref(1);
 const searchTotalPages = ref(0);
+const showTotalResults = ref(false);
 
 const searchResults = computed(() => store.getters["content/getSearchResult"].results);
 const searchTotalResults = computed(() => store.getters["content/getSearchResult"].total_results);
@@ -56,6 +57,8 @@ const loadContent = async () => {
 const getSearchValue = debounce(async () => {
   currentPage.value = 1;
 
+  showTotalResults.value = false;
+
   const response = await getSearchMulti({ query: valueSearch.value, page: currentPage.value });
 
   searchTotalPages.value = response.total_pages;
@@ -63,6 +66,8 @@ const getSearchValue = debounce(async () => {
   store.commit("content/SET_SEARCH_RESULT", {
     searchResult: { results: response.results, total_results: response.total_results },
   });
+
+  showTotalResults.value = true;
 }, 2000);
 
 onBeforeUnmount(() => {
@@ -106,8 +111,6 @@ watch(
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 32px;
-    background-color: darkblue;
-    // min-height: calc((450px + 32px) * 2);
   }
 }
 </style>
