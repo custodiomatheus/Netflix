@@ -9,6 +9,18 @@
         >
           <div class="banner__infos">
             <h1>{{ trending?.title || trending?.name }}</h1>
+
+            <div class="banner__infos--details">
+              <span class="releaseDate">
+                {{ formatReleaseDate(trending?.release_date || trending?.first_air_date) }}
+              </span>
+              <span
+                :class="['average', `average${Math.round(trending.vote_average) > 5 ? '--positive' : '--negative'}`]"
+              >
+                {{ Math.round(trending.vote_average) }} pontos
+              </span>
+            </div>
+
             <p>{{ limitString(trending.overview, 400) }}</p>
           </div>
 
@@ -27,12 +39,19 @@ import BaseSwiper from "@/components/Base/BaseSwiper";
 import { TMDB_IMAGE_URL } from "@/helpers/constants/urls";
 
 defineProps<{ trendings: Trending[] }>();
+
+const formatReleaseDate = (date: number | undefined) => {
+  if (!date) return "";
+  const formatter = new Intl.DateTimeFormat("pt-BR", { year: "numeric", month: "numeric" });
+
+  return formatter.format(new Date(`${date}T00:00:00`));
+};
 </script>
 
 <style lang="scss" scoped>
 .banner {
   width: 100%;
-  height: calc(65vh + $header-height-size-2);
+  height: calc(75vh + $header-height-size-2);
   position: relative;
 
   &__infos {
@@ -43,7 +62,8 @@ defineProps<{ trendings: Trending[] }>();
     transform: translate(0, -50%);
 
     h1,
-    p {
+    p,
+    span {
       color: $white;
     }
 
@@ -54,6 +74,28 @@ defineProps<{ trendings: Trending[] }>();
 
     p {
       line-height: 140%;
+    }
+
+    &--details {
+      display: flex;
+      gap: 16px;
+      margin: 16px 0 32px;
+
+      .releaseDate {
+        color: $white;
+      }
+
+      .average,
+      .releaseDate {
+        font-weight: 600;
+      }
+
+      .average--positive {
+        color: $green;
+      }
+      .average--negative {
+        color: $red;
+      }
     }
   }
 

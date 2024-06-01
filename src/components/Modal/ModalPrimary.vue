@@ -28,9 +28,11 @@ const emits = defineEmits(["closeModal"]);
 
 interface ItemProp {
   title: string;
+  backdrop_path: string;
   overview: string;
-  release_date: number;
+  release_date?: number;
   vote_average: number;
+  first_air_date?: number;
 }
 
 const props = defineProps<{
@@ -39,11 +41,11 @@ const props = defineProps<{
 
 const releaseDateFormatted = computed(() => {
   const formatter = new Intl.DateTimeFormat("pt-BR", { year: "numeric", month: "numeric" });
-  return formatter.format(new Date(`${props.item.release_date}T00:00:00`));
+  return formatter.format(new Date(`${props.item?.release_date || props.item?.first_air_date}T00:00:00`));
 });
 
 const voteAverageFormatter = computed(() => {
-  return props.item.vote_average.toFixed(2);
+  return Math.round(props.item.vote_average);
 });
 </script>
 

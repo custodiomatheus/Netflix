@@ -35,7 +35,9 @@ onBeforeMount(async () => {
   popularMovies.value = movies.results;
   popularTvs.value = tvs.results;
 
-  store.commit("content/SET_TRENDINGS", { trendings: trendingTransform([movies.results[0], tvs.results[0]]) });
+  store.commit("content/SET_TRENDINGS", {
+    trendings: trendingTransform([movies.results[0], tvs.results[0], movies.results[1], tvs.results[1]]),
+  });
 });
 </script>
 

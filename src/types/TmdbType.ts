@@ -20,24 +20,6 @@ export class Movie {
   }
 }
 
-// export class MovieDetails {
-//   id: string;
-//   title?: string;
-//   backdrop_path: string;
-//   overview: string;
-
-//   private constructor(movie: Movie) {
-//     this.id = movie.id;
-//     this.title = movie.title;
-//     this.backdrop_path = movie.backdrop_path;
-//     this.overview = movie.overview;
-//   }
-
-//   public static create(movie: Movie): Movie {
-//     return new Movie(movie);
-//   }
-// }
-
 export class Tv {
   id: string;
   name?: string;
@@ -60,30 +42,15 @@ export class Tv {
   }
 }
 
-// export class TvDetails {
-//   id: string;
-//   nanme?: string;
-//   backdrop_path: string;
-//   overview: string;
-
-//   private constructor(tv: Tv) {
-//     this.id = tv.id;
-//     this.nanme = tv.nanme;
-//     this.backdrop_path = tv.backdrop_path;
-//     this.overview = tv.overview;
-//   }
-
-//   public static create(tv: Tv): Tv {
-//     return new Tv(tv);
-//   }
-// }
-
 export class Trending {
   id: string;
   title?: string;
   name?: string;
   backdrop_path: string;
   overview: string;
+  release_date?: number;
+  first_air_date?: number;
+  vote_average: number;
 
   private constructor(trending: Trending) {
     this.id = trending.id;
@@ -91,6 +58,9 @@ export class Trending {
     this.name = trending.name;
     this.backdrop_path = trending.backdrop_path;
     this.overview = trending.overview;
+    this.release_date = trending.release_date;
+    this.first_air_date = trending.first_air_date;
+    this.vote_average = trending.vote_average;
   }
 
   public static create(trending: Trending): Trending {
