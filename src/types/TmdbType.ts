@@ -5,6 +5,7 @@ export class Movie {
   overview: string;
   vote_average: number;
   poster_path: string;
+  release_date?: number;
 
   private constructor(movie: Movie) {
     this.id = movie.id;
@@ -13,6 +14,7 @@ export class Movie {
     this.overview = movie.overview;
     this.vote_average = movie.vote_average;
     this.poster_path = movie.poster_path;
+    this.release_date = movie.release_date;
   }
 
   public static create(movie: Movie): Movie {
@@ -27,6 +29,7 @@ export class Tv {
   overview: string;
   vote_average: number;
   poster_path: string;
+  first_air_date?: number;
 
   private constructor(tv: Tv) {
     this.id = tv.id;
@@ -35,6 +38,7 @@ export class Tv {
     this.overview = tv.overview;
     this.vote_average = tv.vote_average;
     this.poster_path = tv.poster_path;
+    this.first_air_date = tv.first_air_date;
   }
 
   public static create(tv: Tv): Tv {

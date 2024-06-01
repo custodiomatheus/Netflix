@@ -1,6 +1,9 @@
 <template>
   <div class="cardPrimary">
-    <img :src="poster_path" :alt="overview" loading="lazy" />
+    <div class="cardPrimary__image">
+      <img :src="poster_path_small" :alt="overview" loading="lazy" />
+      <img :src="poster_path_big" :alt="overview" loading="lazy" class="cardPrimary__image--big" />
+    </div>
 
     <div class="cardPrimary__overlay">
       <p>{{ overviewSliced }}</p>
@@ -17,9 +20,10 @@ import BaseButton from "@/components/Base/BaseButton.vue";
 const emits = defineEmits(["buttonClick"]);
 
 const props = defineProps<{
-  title: string;
+  title: string | undefined;
   overview: string;
-  poster_path: string;
+  poster_path_big: string;
+  poster_path_small: string;
 }>();
 
 const overviewSliced = computed(() => {
@@ -38,10 +42,19 @@ const handleClick = () => {
 .cardPrimary {
   position: relative;
 
-  img {
-    width: 100%;
-    height: 380px;
-    border-radius: $border-radius;
+  .cardPrimary__image {
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 380px;
+      border-radius: $border-radius;
+    }
+
+    &--big {
+      position: absolute;
+      left: 0;
+    }
   }
 
   &__overlay {

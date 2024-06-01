@@ -6,13 +6,14 @@
   <section class="slider">
     <h2>{{ title }}</h2>
 
-    <BaseSwiper :space-between="32" :slides-per-view="4.5" :auto-play="{ enabled: false }" :navigation="true">
+    <BaseSwiper :space-between="32" :slides-per-view="4.5" :navigation="true">
       <template #swiper-slide>
         <swiper-slide v-for="item in items" :key="item.id">
           <CardPrimary
             :overview="item.overview"
             :title="item?.title || item?.name"
-            :poster_path="`${TMDB_IMAGE_URL}w400/${item.poster_path}`"
+            :poster_path_small="`${TMDB_IMAGE_URL}w92/${item.poster_path}`"
+            :poster_path_big="`${TMDB_IMAGE_URL}w780/${item.poster_path}`"
             @buttonClick="handleModal(true, item)"
           />
         </swiper-slide>
@@ -32,15 +33,15 @@ import ModalPrimary from "@/components/Modal/ModalPrimary.vue";
 
 defineProps<{
   title?: string;
-  items?: Tv | Movie;
+  items?: Tv[] | Movie[];
 }>();
 
 const modalInfo = ref({
   show: false,
-  data: {},
+  data: {} as Tv | Movie,
 });
 
-const handleModal = (show = false, item = {}) => {
+const handleModal = (show = false, item: Tv | Movie) => {
   modalInfo.value.show = show;
   modalInfo.value.data = item;
 };

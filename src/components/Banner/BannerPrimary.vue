@@ -2,11 +2,10 @@
   <section class="banner">
     <BaseSwiper effect="fade">
       <template #swiper-slide>
-        <swiper-slide
-          v-for="trending in trendings"
-          :key="trending.id"
-          :style="[{ 'background-image': `url(${TMDB_IMAGE_URL}w1280/${trending.backdrop_path})` }]"
-        >
+        <swiper-slide v-for="trending in trendings" :key="trending.id">
+          <img :src="`${TMDB_IMAGE_URL}w300/${trending.backdrop_path}`" loading="lazy" />
+          <img :src="`${TMDB_IMAGE_URL}w1280/${trending.backdrop_path}`" loading="lazy" />
+
           <div class="banner__infos">
             <h1>{{ trending?.title || trending?.name }}</h1>
 
@@ -59,6 +58,7 @@ const formatReleaseDate = (date: number | undefined) => {
     padding: 0 $padding-horizontal-desktop;
     position: absolute;
     top: 50%;
+    z-index: 3;
     transform: translate(0, -50%);
 
     h1,
@@ -102,7 +102,17 @@ const formatReleaseDate = (date: number | undefined) => {
   &__shadow {
     width: 55%;
     height: 100%;
+    z-index: 2;
+    position: absolute;
     background: linear-gradient(90deg, $black 60%, rgba($black, 1) 80%, transparent 100%);
+  }
+
+  img {
+    height: 100%;
+    width: 60%;
+    position: absolute;
+    right: 0;
+    z-index: 1;
   }
 
   .swiper {

@@ -2,7 +2,7 @@
   <BaseModal @closeModal="emits('closeModal')">
     <div class="modalPrimary flexContainer">
       <div class="modalPrimary__info flexContainer--small">
-        <h1>{{ item.title }}</h1>
+        <h1>{{ item?.title }}</h1>
 
         <div class="flexContainer--small">
           <span class="releaseDate">{{ releaseDateFormatted }}</span>
@@ -11,32 +11,27 @@
           </span>
         </div>
 
-        <span>{{ item.overview }}</span>
+        <span>{{ item?.overview }}</span>
       </div>
 
-      <img :src="`${TMDB_IMAGE_URL}w1280/${item.backdrop_path}`" />
+      <div class="modalPrimary__images">
+        <img :src="`${TMDB_IMAGE_URL}w300/${item?.backdrop_path}`" />
+        <img :src="`${TMDB_IMAGE_URL}w1280/${item?.backdrop_path}`" class="modalPrimary__images--big" />
+      </div>
     </div>
   </BaseModal>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { Tv, Movie } from "@/types/TmdbType";
 import BaseModal from "@/components/Base/BaseModal.vue";
 import { TMDB_IMAGE_URL } from "@/helpers/constants/urls";
 
 const emits = defineEmits(["closeModal"]);
 
-interface ItemProp {
-  title: string;
-  backdrop_path: string;
-  overview: string;
-  release_date?: number;
-  vote_average: number;
-  first_air_date?: number;
-}
-
 const props = defineProps<{
-  item: ItemProp;
+  item: Tv | Movie;
 }>();
 
 const releaseDateFormatted = computed(() => {
@@ -45,7 +40,7 @@ const releaseDateFormatted = computed(() => {
 });
 
 const voteAverageFormatter = computed(() => {
-  return Math.round(props.item.vote_average);
+  return Math.round(props.item?.vote_average || 0);
 });
 </script>
 
@@ -100,9 +95,20 @@ const voteAverageFormatter = computed(() => {
     }
   }
 
-  img {
-    border-radius: $border-radius;
-    width: 50%;
+  .modalPrimary__images {
+    min-width: 50%;
+    position: relative;
+
+    &--big {
+      position: absolute;
+      left: 0;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: $border-radius;
+    }
   }
 }
 </style>
