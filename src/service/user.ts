@@ -1,4 +1,3 @@
-// TODO: ESTRUTURAR O CORPO DA RESPOSTA
 import { UserLoginCredentials, User } from "@/types/UserType";
 import { generateProvisionalToken } from "@/helpers/generateProvisionalToken";
 

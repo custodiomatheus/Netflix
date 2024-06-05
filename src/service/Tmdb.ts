@@ -58,9 +58,6 @@ interface getSearchMultiProps {
 export const getSearchMulti = async ({ query, page }: getSearchMultiProps): Promise<TvReponse | MovieReponse> => {
   const response = await instance.get(`search/multi?query=${query}+e+&page=${page}`);
 
-  console.log(response.data);
-  
-
   return response.data;
 };
 

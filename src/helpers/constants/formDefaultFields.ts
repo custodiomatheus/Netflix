@@ -14,14 +14,6 @@ export const FormDefaultFields = {
     maxlength: 50,
     rules: "required|min:8|max:50",
   },
-  // CONFIRMED_PASSWORD: {
-  //   label: { text: "Senha" },
-  //   name: "confirmed_password",
-  //   placeholder: "Confirme sua senha",
-  //   type: "text",
-  //   maxlength: 50,
-  //   rules: "required|confirmed:password",
-  // },
   FULLNAME: {
     label: { text: "Nome completo" },
     name: "name",
